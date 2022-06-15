@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private bool isGround;
+    private bool isDoublej;
+
+    private int jumpCount = 0;
 
     [SerializeField] float speed;
     [SerializeField] float thurst;
@@ -16,6 +19,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
         animator = GetComponent<Animator>();
     }
 
@@ -23,6 +27,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Jump();
+        CheckJumpState();
     }
 
     private void FixedUpdate()
@@ -44,11 +49,13 @@ public class PlayerController : MonoBehaviour
         if(inputH > 0)
         {
             animator.SetBool("moving", true);
+
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else if(inputH < 0)
         {
             animator.SetBool("moving", true);
+
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
         else
@@ -60,21 +67,58 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
+
             rb.AddForce(transform.up * thurst, ForceMode2D.Impulse);
-            
+
+        }else if (Input.GetKeyDown(KeyCode.Space) && !isGround && !isDoublej)
+        {
+            rb.AddForce(transform.up * thurst, ForceMode2D.Impulse);
+
+            isDoublej = true;
+
+            animator.SetBool("doubleJump", true);
         }
+   
     }
 
+
+    private void CheckJumpState()
+    {
+        if(rb.velocity.y > 0)
+        {
+            animator.SetBool("jumping", true);
+
+            animator.SetBool("isFalling", false);
+        }
+        else if(rb.velocity.y < 0)
+        {
+            animator.SetBool("isFalling", true);
+
+            animator.SetBool("jumping", false);
+        }
+        else
+        {
+            animator.SetBool("jumping", false);
+
+            animator.SetBool("isFalling", false);
+        }
+
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
-            animator.SetBool("jumping", false);
+         
             animator.SetBool("isGround", isGround);
+
+            animator.SetBool("doubleJump", false);
+
+            isDoublej = false;
 
         }
     }
@@ -84,8 +128,9 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGround = false;
-            animator.SetBool("jumping", true);
+
             animator.SetBool("isGround", isGround);
+
         }
     }
 }
