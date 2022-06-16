@@ -131,6 +131,7 @@ public class PlayerController : MonoBehaviour
 
             animator.SetBool("isGround", isGround);
 
+            animator.SetBool("moving", false);
         }
     }
 }
