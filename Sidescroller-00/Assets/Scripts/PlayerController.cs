@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool isGround;
     private bool isDoublej;
+    private bool isHitTaken;
 
     private int jumpCount = 0;
 
     [SerializeField] float speed;
-    [SerializeField] float thurst;
+    [SerializeField] float thurst = 10;
+    [SerializeField] float hitThurst = 8;
 
     // Start is called before the first frame update
     void Start()
@@ -41,18 +43,20 @@ public class PlayerController : MonoBehaviour
         float inputH = Input.GetAxis("Horizontal");
 
         float posX = inputH * speed * Time.deltaTime;
-        
-        transform.position += new Vector3(posX, 0, 0);
-       
 
 
-        if(inputH > 0)
+        if (!isHitTaken) {
+            transform.position += new Vector3(posX, 0, 0);
+        }
+
+
+        if(inputH > 0 && !isHitTaken)
         {
             animator.SetBool("moving", true);
 
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
-        else if(inputH < 0)
+        else if(inputH < 0 && !isHitTaken)
         {
             animator.SetBool("moving", true);
 
@@ -73,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
             rb.AddForce(transform.up * thurst, ForceMode2D.Impulse);
 
-        }else if (Input.GetKeyDown(KeyCode.Space) && !isGround && !isDoublej)
+        }else if (Input.GetKeyDown(KeyCode.Space) && !isGround && !isDoublej && !isHitTaken)
         {
             rb.AddForce(transform.up * thurst, ForceMode2D.Impulse);
 
@@ -87,13 +91,13 @@ public class PlayerController : MonoBehaviour
 
     private void CheckJumpState()
     {
-        if(rb.velocity.y > 0)
+        if(rb.velocity.y > 0 && !isHitTaken)
         {
             animator.SetBool("jumping", true);
 
             animator.SetBool("isFalling", false);
         }
-        else if(rb.velocity.y < 0)
+        else if(rb.velocity.y < 0 && !isHitTaken && !isGround)
         {
             animator.SetBool("isFalling", true);
 
@@ -120,6 +124,19 @@ public class PlayerController : MonoBehaviour
 
             isDoublej = false;
 
+            isHitTaken = false;
+
+        }
+
+        if (collision.gameObject.CompareTag("Trap"))
+        {
+            animator.SetBool("isGround", false);
+
+            animator.SetTrigger("hit");
+
+            isHitTaken = true;
+
+            rb.AddForce((transform.up + (-transform.right)) * hitThurst, ForceMode2D.Impulse);
         }
     }
 
