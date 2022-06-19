@@ -29,7 +29,7 @@ public class SpikedBall : MonoBehaviour
             rigidbody2D.angularVelocity = velocityThreshold;
         }
         else if (transform.rotation.z < 0
-       && transform.rotation.z > rightPushRange
+       && transform.rotation.z > leftPushRange
        && (rigidbody2D.angularVelocity < 0)
        && rigidbody2D.angularVelocity > velocityThreshold * -1)
         {
