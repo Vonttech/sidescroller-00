@@ -178,7 +178,6 @@ GameObject:
   - component: {fileID: 2399106521570946009}
   - component: {fileID: 2399106521570946010}
   - component: {fileID: 2399106521570946014}
-  - component: {fileID: 2399106521570946011}
   m_Layer: 0
   m_Name: Spiked Ball
   m_TagString: Trap
@@ -321,30 +320,6 @@ FixedJoint2D:
   m_ConnectedAnchor: {x: 0, y: -0.71879995}
   m_DampingRatio: 0
   m_Frequency: 0
---- !u!233 &2399106521570946011
-HingeJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2399106521570946012}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 2399106521834045273}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -0.71879995}
-  m_UseMotor: 0
-  m_Motor:
-    m_MotorSpeed: 0
-    m_MaximumMotorForce: 10000
-  m_UseLimits: 0
-  m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
 --- !u!1 &2399106521834045272
 GameObject:
   m_ObjectHideFlags: 0
