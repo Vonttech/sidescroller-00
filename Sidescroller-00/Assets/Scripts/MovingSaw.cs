@@ -19,10 +19,8 @@ public class MovingSaw : MonoBehaviour
     void Start()
     {
       rightLimit = new Vector3(transform.position.x + limit.x, transform.position.y + limit.y, 0);
-      leftLimit = new Vector3(transform.position.x - limit.x, transform.position.y - limit.y, 0);
-      Debug.Log(rightLimit);
-      Debug.Log(leftLimit);
 
+      leftLimit = new Vector3(transform.position.x - limit.x, transform.position.y - limit.y, 0);
     }
 
     // Update is called once per frame
@@ -33,7 +31,6 @@ public class MovingSaw : MonoBehaviour
 
     private void Move()
     {
-        Debug.Log(toRight);
         if (toRight)
         {
             transform.position += Vector3.right * Time.deltaTime * speed;
