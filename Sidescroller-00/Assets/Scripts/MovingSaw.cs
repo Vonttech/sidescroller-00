@@ -11,6 +11,7 @@ public class MovingSaw : MonoBehaviour
     private float speed;
 
     private Vector3 rightLimit;
+
     private Vector3 leftLimit;
 
     bool toRight = true;
