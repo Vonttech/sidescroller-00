@@ -4,36 +4,78 @@ using UnityEngine;
 
 public class TrapToggler : MonoBehaviour
 {
-    //[SerializeField]
-    //private float activeTrap = 6;
+    [SerializeField]
+    private float maxDistanceAllowed = 1f;
 
-    //private bool isActive = false;
+    private float distance;
 
-    //private GameObject player;
+    [SerializeField]
+    private float speed = 2.25f;
 
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-    //    player = GameObject.FindGameObjectWithTag("Player");
-    //}
+    [SerializeField]
+    private float moveUnits = 0.09f;
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    //Debug.Log(Vector3.Distance(player.transform.position, transform.position));
+    private bool isActive = false;
 
-    //    if (Vector3.Distance(transform.position, player.transform.position) < activeTrap)
-    //    {
-    //        isActive = true; 
-    //        //Debug.DrawLine(transform.position, player.transform.position, Color.red);
-    //        //Debug.Log(Vector3.Distance(player.transform.position, transform.position));
-    //        //transform.position += ((player.transform.position - transform.position) * Time.deltaTime * 0.55f);
+    [SerializeField]
+    private Vector2 trapActivePosition;
 
-    //        transform.position += new Vector3(0, 0.10f, 0) * Time.deltaTime * 0.2f;
-    //    }
-    //    else
-    //    {
-    //        isActive = false;
-    //    }
-    //}
+    private Transform target;
+
+    private Collider2D trapCollider;
+
+    //start is called before the first frame update
+    void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+
+        trapCollider = GetComponent<Collider2D>();
+    }
+
+    //update is called once per frame
+    void Update()
+    {
+        CheckTrapStatus();
+    }
+
+    private bool ActiveTrap(float distance)
+    {
+        if (!isActive)
+        {
+            if (distance <= maxDistanceAllowed)
+            {
+                isActive = true;
+                return isActive;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
+        } 
+    }
+
+    private void CheckTrapStatus()
+    {
+
+        distance = Vector3.Distance(target.position, transform.position);
+
+        isActive = ActiveTrap(distance);
+
+        trapActivePosition.x = transform.position.x;
+
+        if (isActive)
+        {
+            if(transform.position.y < trapActivePosition.y)
+            {
+                transform.position += Vector3.up * moveUnits * speed * Time.deltaTime;
+            }
+
+            trapCollider.enabled = true;
+
+        }
+    }
 }
