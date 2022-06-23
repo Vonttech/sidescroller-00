@@ -35,7 +35,8 @@ public class MovingSawRail : MonoBehaviour
 
             if (topLimitDistance >= maxLimitDistance)
             {
-                transform.position += new Vector3(0, moveDistance * Time.deltaTime * moveSpeed, 0);
+
+                transform.localPosition += new Vector3(0, moveDistance * Time.deltaTime * moveSpeed, 0);
             }
             else
             {
@@ -48,7 +49,7 @@ public class MovingSawRail : MonoBehaviour
             
             if (bottomLimitDistance >= maxLimitDistance)
             {
-                transform.position -= new Vector3(0, moveDistance * Time.deltaTime * moveSpeed, 0);
+                transform.localPosition -= new Vector3(0, moveDistance * Time.deltaTime * moveSpeed, 0);
             }
             else
             {
