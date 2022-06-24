@@ -17,8 +17,6 @@ public class TrapBox : MonoBehaviour
 
     private float targetDistance;
 
-    private bool disableBox;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +50,8 @@ public class TrapBox : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         gameObject.SetActive(false);
+
+        Instantiate(innerTrap, transform.position, innerTrap.transform.rotation);
 
         innerTrap.transform.position = transform.position;
 
