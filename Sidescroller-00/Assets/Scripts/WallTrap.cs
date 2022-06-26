@@ -39,11 +39,6 @@ public class WallTrap : MonoBehaviour
 
     private bool disableTrap = false;
 
-    private void Start()
-    {
- 
-    }
-
     private void Update()
     {
         CheckTargetDistance();
