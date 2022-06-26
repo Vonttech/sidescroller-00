@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Itrap : MonoBehaviour
+public class Trap : MonoBehaviour
 {
+    [SerializeField]
+    private Transform target;
+    
     // Start is called before the first frame update
     void Start()
     {

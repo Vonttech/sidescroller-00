@@ -1,0 +1,3 @@
+interface Itrap {
+    void Move();
+}
