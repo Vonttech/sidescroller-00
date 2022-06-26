@@ -8,6 +8,7 @@ TagManager:
   - Item
   - Trap
   - DeadZone
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
