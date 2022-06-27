@@ -23,9 +23,13 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D playerRigidBody;
 
+    public static Dictionary<string ,GameObject> itemsCollected = new Dictionary<string, GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
+        playerRigidBody = GetComponent<Rigidbody2D>();
+
         if (respawned)
         {
             transform.position = GameObject.Find("Checkpoint").transform.localPosition + (Vector3.up * 2f);
@@ -37,13 +41,14 @@ public class Player : MonoBehaviour
     {
         
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("DeadZone"))
         {
             isAlive = false;
-            playerRigidBody.Sleep();
+
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
+   
 }
