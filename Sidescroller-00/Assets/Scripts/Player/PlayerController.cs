@@ -136,6 +136,8 @@ public class PlayerController : MonoBehaviour
 
             isHitTaken = true;
 
+            GetComponent<Player>().LifePoints--;
+
             rb.AddForce((transform.up + (-transform.right)) * hitThurst, ForceMode2D.Impulse);
         }
     }
