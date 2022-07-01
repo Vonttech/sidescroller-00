@@ -8,12 +8,17 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidBody;
     
     private Animator animator;
-    private bool isGround;
-    private bool isDoublej;
+    
     private bool isHitTaken;
     private bool isPlayerOnGround;
-    
+    private bool isRunning;
+    private bool isJumping;
+    private bool isDoubleJumping;
+    private bool isFalling;
+
+
     private int jumpCount = 0;
+    private int jumpsLimit = 3;
 
     [SerializeField] float moveSpeed;
     [SerializeField] float thurst = 10;
@@ -25,18 +30,31 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
 
         animator = GetComponent<Animator>();
+
+        isHitTaken = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Move();
         Jump();
         CheckJumpState();
+        GetAnimatorBoolValues();
+    }
+
+    private void GetAnimatorBoolValues()
+    {
+        isPlayerOnGround    = animator.GetBool("isPlayerOnGround");
+        isRunning           = animator.GetBool("isRunning");
+        isJumping           = animator.GetBool("isJumping");
+        isDoubleJumping     = animator.GetBool("isDoubleJumping");
+        isFalling           = animator.GetBool("isRunning");
     }
 
     private void FixedUpdate()
     {
-        Move();
+
     }
 
 
@@ -44,137 +62,195 @@ public class PlayerController : MonoBehaviour
     {
         float inputHorizontalValue = Input.GetAxis("Horizontal");
 
-        float positonXValue = inputHorizontal * moveSpeed * Time.deltaTime;
-   
-        CheckMovementConditions(inputHorizontalValue, positionXValue, isHitTaken);
+        float positionXValue = inputHorizontalValue * moveSpeed * Time.deltaTime;
+
+        CheckRunningConditions(inputHorizontalValue, positionXValue);
      
     }
     
-    private void CheckMovementConditions(float inputMovimentValue, float positionXValue, bool isHitTaken)
+    private void CheckRunningConditions(float inputMovimentValue, float positionXValue)
     {
         int yRotationDegrees;
-        
+ 
         if (!isHitTaken) {
+
             transform.position += new Vector3(positionXValue, 0, 0);
-        }
-        
-        if(inputHorizontalValue > 0 && !isHitTaken)
-        {
-            animator.SetBool("moving", true);
 
-            yRotationDegrees = 0;
+            if (isPlayerOnGround)
+            {
+               
+                bool isPlayerMoving = CheckIsPlayerRunning(inputMovimentValue);
+
+
+                animator.SetBool("isRunning", isPlayerMoving);
+            }
+
+            if(inputMovimentValue > 0)
+            {
+           
+                yRotationDegrees = 0;
                 
-            transform.eulerAngles = new Vector3(0, yRotationDegrees, 0);
-        }
-        else if(inputHorizontalValue < 0 && !isHitTaken)
-        {
-            animator.SetBool("moving", true);
+                transform.eulerAngles = new Vector3(0, yRotationDegrees, 0);
 
-            yRotationDegrees = 180;
+            }
+            else if(inputMovimentValue < 0)
+            {
+       
+                yRotationDegrees = 180;
             
-            transform.eulerAngles = new Vector3(0, yRotationDegrees, 0);
+                transform.eulerAngles = new Vector3(0, yRotationDegrees, 0);
+
+            }
+
         }
-        else
-        {
-            animator.SetBool("moving", false);
-        }
+
     }
 
     private void Jump()
     {
         
-        if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        if (Input.GetKeyDown(KeyCode.Space) && 
+            isPlayerOnGround && 
+            !isHitTaken)
         {
+            isPlayerOnGround = false;
+
+            animator.SetBool("isPlayerOnGround", isPlayerOnGround);
+
             rigidBody.AddForce(transform.up * thurst, ForceMode2D.Impulse);
+
+            jumpCount++;
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && !isGround && !isDoublej && !isHitTaken)
+        else if (Input.GetKeyDown(KeyCode.Space) && 
+            !isPlayerOnGround && 
+            !isDoubleJumping && 
+            !isHitTaken && 
+            jumpCount < jumpsLimit)
         {
             rigidBody.AddForce(transform.up * thurst, ForceMode2D.Impulse);
 
-            isDoublej = true;
+            isDoubleJumping = true;
 
-            animator.SetBool("doubleJump", true);
+            animator.SetBool("isDoubleJumping", isDoubleJumping);
+
+            jumpCount = 0;
         }
    
     }
 
-
-    private void CheckJumpState()
-    {
-        if(rigidBody.velocity.y > 0 && !isHitTaken)
-        {
-            animator.SetBool("jumping", true);
-
-            animator.SetBool("isFalling", false);
-        }
-        else if(rigidBody.velocity.y < 0 && !isHitTaken && !isGround)
-        {
-            animator.SetBool("isFalling", true);
-
-            animator.SetBool("jumping", false);
-        }
-        else
-        {
-            animator.SetBool("jumping", false);
-
-            animator.SetBool("isFalling", false);
-        }
-
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        bool isPLayerHittenByTrap = collision.gameObject.CompareTag("Trap");
+        bool isPlayerHittenByTrap = collision.gameObject.CompareTag("Trap");
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            jumpCount = 0;
+
+            isHitTaken = false;
+
+            isJumping = false;
+
+            isDoubleJumping = false;
+
+            animator.SetBool("isPlayerOnGround", true);
+
+            animator.SetBool("isJumping", isJumping);
+
+            animator.SetBool("isDoubleJumping", isDoubleJumping);
+        }
+
+       
+        CheckTrapHitsPlayer(isPlayerHittenByTrap);
         
-        isPlayerOnGround = collision.gameObject.CompareTag("Ground");
-        
-        CheckPlayerOnGround(bool isPlayerOnGround);
-        
-        CheckTrapHitsPlayer(bool isPlayerHittenByTrap);
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isPlayerOnGround = collision.gameObject.CompareTag("Ground");
-        
-        CheckPlayerOnGround(bool isPlayerOnGround);
-    }
-    
-    private void CheckPlayerOnGround(bool isPlayerOnGround)
-    {
-        if (isPlayerOnGround)
+        bool isPlayerOffTheGround = collision.gameObject.CompareTag("Ground");
+
+        if (isPlayerOffTheGround)
         {
-            isGround = true;
-         
-            animator.SetBool("isGround", isGround);
+            isPlayerOnGround = false;
 
-            animator.SetBool("doubleJump", false);
+            isRunning = false;
 
-            isDoublej = false;
+            animator.SetBool("isPlayerOnGround", isPlayerOnGround);
 
-            isHitTaken = false;
-
-        }
-        else
-        {
-            isGround = false;
-
-            animator.SetBool("isGround", isGround);
-
-            animator.SetBool("moving", false);
+            animator.SetBool("isRunning", isRunning);
         }
     }
-    
+
     private void CheckTrapHitsPlayer(bool isPlayerHittenByTrap)
     {
-            animator.SetBool("isGround", false);
+
+        if (isPlayerHittenByTrap)
+        {
+            animator.SetBool("isPlayerOnGround", false);
 
             animator.SetTrigger("hit");
 
             isHitTaken = true;
 
+            rigidBody.AddForce((transform.up + (-transform.right)) * hitThurst, ForceMode2D.Impulse);
+
             GetComponent<Player>().LifePoints--;
 
-            rigidBody.AddForce((transform.up + (-transform.right)) * hitThurst, ForceMode2D.Impulse);
+
+            animator.SetBool("isJumping", false);
+
+            animator.SetBool("isFalling", false);
+
+        }
     }
+
+    private void CheckJumpState()
+    {
+        if (rigidBody.velocity.y > 0.1 && 
+            !isHitTaken &&
+            !isPlayerOnGround)
+        {
+
+            animator.SetBool("isJumping", true);
+
+            animator.SetBool("isFalling", false);
+
+        }
+        else if (rigidBody.velocity.y < 0 && 
+            !isHitTaken &&
+            !isPlayerOnGround)
+        {
+
+            animator.SetBool("isJumping", false);
+
+            animator.SetBool("isFalling", true);
+
+        }
+        else
+        {
+
+            animator.SetBool("isJumping", false);
+
+            animator.SetBool("isFalling", false);
+
+        }
+
+    }
+
+    private bool CheckIsPlayerRunning( float playerMovementValue )
+    {
+        if (playerMovementValue > 0 || playerMovementValue < 0)
+        {
+            isRunning = true;
+
+            return isRunning;
+        }
+        else
+        {
+            isRunning = false;
+
+            return isRunning;
+        }
+    }
+
 }
