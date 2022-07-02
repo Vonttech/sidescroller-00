@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     public int LifePoints
     {
         get { return lifePoints; }
-        set { lifePoints = value; }
+        set { LifePointsSetTreatment(value); }
     }
 
 
@@ -55,11 +55,25 @@ public class Player : MonoBehaviour
         CheckPlayerStatus();
     }
 
+    private void LifePointsSetTreatment(int value)
+    {
+        if(value <= 0)
+        {
+            lifePoints = 0;
+        }
+        else
+        {
+            lifePoints = value;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("DeadZone"))
         {
             isAlive = false;
+
+            lifePoints = 0;
 
             animator.SetTrigger("death");
 
