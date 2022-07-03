@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     }
 
 
-    public static bool respawned = false;
+    public static bool isReacheadCheckPoint = false;
 
     private Rigidbody2D playerRigidBody;
 
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        if (respawned)
+        if (isReacheadCheckPoint)
         {
             transform.position = GameObject.Find("Checkpoint").transform.localPosition + (Vector3.up * 2f);
         }
