@@ -25,7 +25,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Sprite loseLifePointImage;
 
+    [SerializeField]
+    private GameObject gameOverPanel;
+
     private int playerLifePointsCount;
+
+    private bool isGameOver = false;
 
     public static int fruitPoints = 0;
 
@@ -44,11 +49,9 @@ public class GameManager : MonoBehaviour
 
     private void RestartFromCheckpoint()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !playerScript.IsAlive && Checkpoint.checkpointActivated)
+        if (Input.GetKeyDown(KeyCode.Escape) && !playerScript.IsAlive && Checkpoint.isCheckpointActivated)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-     
-            Player.respawned = true;
         }
     }
 
@@ -67,5 +70,17 @@ public class GameManager : MonoBehaviour
 
             playerLifePointsCount--;
         }
+        else if(playerScript.LifePoints == 0)
+        {
+            GameOver();
+        }
     }
+
+    private void GameOver()
+    {
+        isGameOver = true;
+
+        gameOverPanel.SetActive(isGameOver);
+    }
+
 }

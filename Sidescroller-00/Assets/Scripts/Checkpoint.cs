@@ -6,7 +6,7 @@ public class Checkpoint : MonoBehaviour
 {
     private Animator animator;
 
-    public static bool checkpointActivated = false;
+    public static bool isCheckpointActivated = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,8 @@ public class Checkpoint : MonoBehaviour
         {
             animator.SetTrigger("playerHitCheckpoint");
             animator.SetBool("checkpointActivated", true);
-            checkpointActivated = true;
+            Player.isReacheadCheckPoint = true;
+            isCheckpointActivated = true;
         }
     }
 }
