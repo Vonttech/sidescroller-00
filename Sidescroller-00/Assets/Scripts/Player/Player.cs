@@ -26,9 +26,6 @@ public class Player : MonoBehaviour
         set { LifePointsSetTreatment(value); }
     }
 
-
-    public static bool isReacheadCheckPoint = false;
-
     private Rigidbody2D playerRigidBody;
 
     public static Dictionary<string ,GameObject> itemsCollected = new Dictionary<string, GameObject>();
@@ -43,16 +40,19 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        if (isReacheadCheckPoint)
+        if (Checkpoint.isCheckpointActivated)
         {
             transform.position = GameObject.Find("Checkpoint").transform.localPosition + (Vector3.up * 2f);
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckPlayerStatus();
+
+        LoadPlayerData.playerLifePoints = lifePoints;
     }
 
     private void LifePointsSetTreatment(int value)
