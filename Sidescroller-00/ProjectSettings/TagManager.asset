@@ -9,6 +9,7 @@ TagManager:
   - Trap
   - DeadZone
   - Checkpoint
+  - Fruit
   layers:
   - Default
   - TransparentFX
