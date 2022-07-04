@@ -31,6 +31,10 @@ public class Item : MonoBehaviour
    
             Player.itemsCollected.Add(gameObject.name, gameObject);
 
+            LoadPlayerData.playerFruitPoints++;
+
+            Debug.Log(LoadPlayerData.PlayerLevelRank());
+
             StartCoroutine(DisableItem());
         }
     }
