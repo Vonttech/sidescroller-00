@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2713223945340842513}
   m_Layer: 0
   m_Name: Apple_0
-  m_TagString: Item
+  m_TagString: Fruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
