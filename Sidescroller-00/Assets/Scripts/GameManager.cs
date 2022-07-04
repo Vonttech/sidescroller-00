@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject checkpoint;
+
+    [SerializeField]
+    private Checkpoint checkpointScript;
 
     [SerializeField]
     private GameObject playerGameObject;
@@ -34,9 +38,17 @@ public class GameManager : MonoBehaviour
 
     public static int fruitPoints = 0;
 
+    public static int timesCheckpointUsed = 0;
+
     private void Start()
     {
         playerLifePointsCount = playerScript.LifePoints;
+
+        LoadPlayerData.playerInitialLifePoints = playerScript.LifePoints;
+
+        CountTotalFruitsInLevel();
+
+        CheckCheckpointUseLimit();
     }
 
     // Update is called once per frame
@@ -49,10 +61,34 @@ public class GameManager : MonoBehaviour
 
     private void RestartFromCheckpoint()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !playerScript.IsAlive && Checkpoint.isCheckpointActivated)
+        if (Input.GetKeyDown(KeyCode.Escape) &&
+            !playerScript.IsAlive &&
+            Checkpoint.isCheckpointActivated)
         {
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+            timesCheckpointUsed++;
+
         }
+    }
+
+    private void CheckCheckpointUseLimit()
+    {
+        if(timesCheckpointUsed > checkpointScript.CheckpointUseLimit &&
+            Checkpoint.isCheckpointActivated)
+        {
+            RespawnPlayerLastTime();
+
+            Checkpoint.isCheckpointActivated = false;
+
+            checkpoint.SetActive(false);
+        }
+    }
+
+    private void RespawnPlayerLastTime()
+    {
+        playerGameObject.transform.position = checkpoint.transform.localPosition + (Vector3.up * 2f);
     }
 
     private void CountPoints()
@@ -78,9 +114,24 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        isGameOver = true;
+        if (Checkpoint.isCheckpointActivated)
+        {
+            isGameOver = true;
 
-        gameOverPanel.SetActive(isGameOver);
+            gameOverPanel.SetActive(isGameOver);
+
+        }
+        else
+        {
+            SceneManager.LoadScene("GameOverScene");
+        }
     }
 
+    private void CountTotalFruitsInLevel()
+    {
+        if( LevelData.totalFruitsInLevel == 0)
+        {
+            LevelData.totalFruitsInLevel = GameObject.FindGameObjectsWithTag("Fruit").Length;
+        }
+    }
 }

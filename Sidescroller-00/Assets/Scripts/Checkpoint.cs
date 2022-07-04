@@ -8,6 +8,9 @@ public class Checkpoint : MonoBehaviour
 
     public static bool isCheckpointActivated = false;
 
+    private int checkpointUseLimit = 4;
+    public int CheckpointUseLimit { get { return checkpointUseLimit; } }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +23,6 @@ public class Checkpoint : MonoBehaviour
         {
             animator.SetTrigger("playerHitCheckpoint");
             animator.SetBool("checkpointActivated", true);
-            Player.isReacheadCheckPoint = true;
             isCheckpointActivated = true;
         }
     }
