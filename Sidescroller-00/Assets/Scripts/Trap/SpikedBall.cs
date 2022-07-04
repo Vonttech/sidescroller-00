@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpikedBall : MonoBehaviour
 {
-    private Rigidbody2D rigidbody2D;
+    private new Rigidbody2D rigidbody2D;
     [SerializeField] float leftPushRange;
     [SerializeField] float rightPushRange;
     [SerializeField] float velocityThreshold;
