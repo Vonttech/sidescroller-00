@@ -32,6 +32,13 @@ public class Player : MonoBehaviour
 
     private Animator animator;
 
+    private void Awake()
+    {
+        if (GameManager.isLevelReseted && !Checkpoint.isCheckpointActivated)
+        {
+            itemsCollected.Clear();
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +52,8 @@ public class Player : MonoBehaviour
             transform.position = GameObject.Find("Checkpoint").transform.localPosition + (Vector3.up * 2f);
         }
 
+        
+
     }
 
     // Update is called once per frame
@@ -52,7 +61,7 @@ public class Player : MonoBehaviour
     {
         CheckPlayerStatus();
 
-        LoadPlayerData.playerLifePoints = lifePoints;
+        PlayerData.playerLifePoints = lifePoints;
     }
 
     private void LifePointsSetTreatment(int value)
