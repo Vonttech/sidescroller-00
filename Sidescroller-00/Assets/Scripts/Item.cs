@@ -16,6 +16,8 @@ public class Item : MonoBehaviour
         }
         else
         {
+            gameObject.SetActive(true);
+
             animator = GetComponent<Animator>();
         }
     }
@@ -25,15 +27,12 @@ public class Item : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.fruitPoints++;
             
             animator.SetBool("collected", true);
    
             Player.itemsCollected.Add(gameObject.name, gameObject);
 
-            LoadPlayerData.playerFruitPoints++;
-
-            Debug.Log(LoadPlayerData.PlayerLevelRank());
+            PlayerData.playerFruitPoints++;
 
             StartCoroutine(DisableItem());
         }
