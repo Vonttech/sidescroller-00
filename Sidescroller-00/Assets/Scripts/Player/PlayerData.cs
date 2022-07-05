@@ -1,4 +1,4 @@
-public static class LoadPlayerData
+public static class PlayerData
 {
     public static int playerFruitPoints;
 
