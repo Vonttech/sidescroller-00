@@ -7,6 +7,15 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public static int timesCheckpointUsed = 0;
+
+    public static Vector3 levelStartPoint;
+
+    public static bool isLevelReseted = false;
+
+    [SerializeField]
+    private Transform startPointPlataform;
+
     [SerializeField]
     private GameObject checkpoint;
 
@@ -31,23 +40,31 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOverPanel;
 
+    [SerializeField]
+    private GameObject trophy;
+
     private int playerLifePointsCount;
 
     private bool isGameOver = false;
 
-    public static int fruitPoints = 0;
-
-    public static int timesCheckpointUsed = 0;
+    private float yPlayerRespawnPosition = 3f;
 
     private void Start()
     {
         playerLifePointsCount = playerScript.LifePoints;
 
-        LoadPlayerData.playerInitialLifePoints = playerScript.LifePoints;
+
+        Trophy.isPlayerBeatLevel = false;
+
+        PlayerData.playerInitialLifePoints = playerScript.LifePoints;
+
+        levelStartPoint = startPointPlataform.transform.position + (Vector3.up * yPlayerRespawnPosition); ;
 
         CountTotalFruitsInLevel();
 
         CheckCheckpointUseLimit();
+
+        RespawnPlayerFromStartPoint();
     }
 
     // Update is called once per frame
@@ -56,6 +73,12 @@ public class GameManager : MonoBehaviour
         RestartFromCheckpoint();
         CountPoints();
         CheckPlayerLifePoints();
+        PlayerBeatLevel();
+    }
+
+    private void RespawnPlayerFromStartPoint()
+    {
+        playerGameObject.transform.position = levelStartPoint;
     }
 
     private void RestartFromCheckpoint()
@@ -77,7 +100,7 @@ public class GameManager : MonoBehaviour
         if(timesCheckpointUsed > checkpointScript.CheckpointUseLimit &&
             Checkpoint.isCheckpointActivated)
         {
-            RespawnPlayerLastTime();
+            LastCheckpointPlayerRespaw();
 
             Checkpoint.isCheckpointActivated = false;
 
@@ -85,14 +108,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void RespawnPlayerLastTime()
+    private void LastCheckpointPlayerRespaw()
     {
+        Debug.Log("Last checkpoint position"); //O ÚLTIMO CHECKPOINT LEVA PARA O INÍCIO DO JOGO
         playerGameObject.transform.position = checkpoint.transform.localPosition + (Vector3.up * 2f);
     }
 
     private void CountPoints()
     {
-        pointsTextField.text = fruitPoints.ToString();
+        pointsTextField.text = PlayerData.playerFruitPoints.ToString();
     }
 
     private void CheckPlayerLifePoints()
@@ -126,11 +150,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void PlayerBeatLevel()
+    {
+        if (Trophy.isPlayerBeatLevel)
+        {
+            SceneManager.LoadScene("ScoreScene");
+        }
+    }
+
     private void CountTotalFruitsInLevel()
     {
         if( LevelData.totalFruitsInLevel == 0)
         {
             LevelData.totalFruitsInLevel = GameObject.FindGameObjectsWithTag("Fruit").Length;
         }
+    }
+
+    public static void ResetLevelData()
+    {
+        isLevelReseted = true;
+
+        PlayerData.playerFruitPoints = 0;
+
+        Checkpoint.isCheckpointActivated = false;
+
+        GameManager.timesCheckpointUsed = 0;
+
     }
 }
