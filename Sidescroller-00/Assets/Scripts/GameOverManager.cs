@@ -17,8 +17,8 @@ public class GameOverManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerRank.text = LoadPlayerData.PlayerLevelRank();
-        itemsCollected.text = $"{LoadPlayerData.playerFruitPoints}/{LevelData.totalFruitsInLevel}";
+        playerRank.text = PlayerData.PlayerLevelRank();
+        itemsCollected.text = $"{PlayerData.playerFruitPoints}/{LevelData.totalFruitsInLevel}";
     }
 
     // Update is called once per frame
@@ -31,9 +31,8 @@ public class GameOverManager : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
 
-        GameManager.timesCheckpointUsed = 0;
+        GameManager.ResetLevelData();
 
-        LoadPlayerData.playerFruitPoints = 0;
     }
 
     public void ExitGame()

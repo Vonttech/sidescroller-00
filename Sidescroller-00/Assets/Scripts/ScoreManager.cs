@@ -16,17 +16,15 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerRank.text = LoadPlayerData.PlayerLevelRank();
-        lifePointsRemaining.text = LoadPlayerData.playerLifePoints.ToString();
-        itemsCollected.text = $"{LoadPlayerData.playerFruitPoints}/{LevelData.totalFruitsInLevel}";
+        playerRank.text = PlayerData.PlayerLevelRank();
+        lifePointsRemaining.text = PlayerData.playerLifePoints.ToString();
+        itemsCollected.text = $"{PlayerData.playerFruitPoints}/{LevelData.totalFruitsInLevel}";
     }
 
     public void NextLevel()
     {
         SceneManager.LoadScene("SampleScene");
 
-        GameManager.timesCheckpointUsed = 0;
-
-        LoadPlayerData.playerFruitPoints = 0;
+        GameManager.ResetLevelData();
     }
 }
