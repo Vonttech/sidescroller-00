@@ -10,6 +10,8 @@ public class WallTrap : MonoBehaviour
     [SerializeField]
     private Transform spikesTransform;
 
+    private Transform spikesInitialPosition;
+
     [SerializeField]
     private float maxDistanceAllowed = 5f;
 
@@ -38,6 +40,11 @@ public class WallTrap : MonoBehaviour
     private bool moveTrap = false;
 
     private bool disableTrap = false;
+
+    private void Start()
+    {
+        spikesInitialPosition = spikesTransform;
+    }
 
     private void Update()
     {
@@ -83,10 +90,7 @@ public class WallTrap : MonoBehaviour
             if (transform.localPosition.x >= xFinalPos)
             {
                 transform.position -= Vector3.right * moveSpeed * Time.deltaTime * movePerUnit;
-                if (spikesTransform.localPosition.x >= spikeXFinalPos)
-                {
-                    spikesTransform.position -= Vector3.right * spikeMoveSpeed * Time.deltaTime * spikeMovePerUnit;
-                }
+                ShowSpikes();
             }
             else
             {
@@ -99,8 +103,25 @@ public class WallTrap : MonoBehaviour
     private void DisableTrap()
     {
         if(disableTrap && transform.localPosition.y >= 0)
-        {   
+        {
+            HideSpikes();
             transform.localPosition += Vector3.down * movePerUnit * moveSpeed * Time.deltaTime;
+        }
+    }
+
+    private void ShowSpikes()
+    {
+        if (spikesTransform.localPosition.x >= spikeXFinalPos)
+        {
+            spikesTransform.position -= Vector3.right * spikeMoveSpeed * Time.deltaTime * spikeMovePerUnit;
+        }
+    }
+
+    private void HideSpikes()
+    {
+        if (spikesTransform.localPosition.x <= spikesInitialPosition.localPosition.x)
+        {
+            spikesTransform.position += Vector3.right * spikeMoveSpeed * Time.deltaTime * spikeMovePerUnit;
         }
     }
 }
