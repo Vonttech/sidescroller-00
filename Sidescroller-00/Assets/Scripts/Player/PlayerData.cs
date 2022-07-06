@@ -8,6 +8,8 @@ public static class PlayerData
 
     public static int playerLifePoints;
 
+    public static int playerLifePointsBeforeInstaDeath;
+
     public static string PlayerLevelRank()
     {
         float playerFruitPointsMean = playerFruitPoints * 1.75f / LevelData.totalFruitsInLevel;
