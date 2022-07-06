@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+
     private Animator animator;
 
     public static bool isCheckpointActivated = false;
