@@ -34,10 +34,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        if (GameManager.isLevelReseted && !Checkpoint.isCheckpointActivated)
-        {
-            itemsCollected.Clear();
-        }
+        
     }
 
     // Start is called before the first frame update
@@ -47,12 +44,7 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        if (Checkpoint.isCheckpointActivated)
-        {
-            transform.position = GameObject.Find("Checkpoint").transform.localPosition + (Vector3.up * 2f);
-        }
-
-        
+        SpawnPlayer();
 
     }
 
@@ -108,6 +100,25 @@ public class Player : MonoBehaviour
             animator.SetTrigger("death");
 
             StartCoroutine(DisablePlayerSprite());
+        }
+    }
+
+    private void SpawnPlayer()
+    {
+        if (!Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
+        {
+            transform.position = LevelData.levelStartPoint;
+
+        }
+        else if (Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
+        {
+            transform.position = LevelData.checkpointPosition;
+        }
+        else if (Checkpoint.isLastRespawnAllowed)
+        {
+            transform.position = LevelData.checkpointPosition;
+
+            Checkpoint.isLastRespawnAllowed = false;
         }
     }
 }
