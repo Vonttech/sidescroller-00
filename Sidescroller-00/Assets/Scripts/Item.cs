@@ -6,6 +6,10 @@ public class Item : MonoBehaviour
 {
     private Animator animator;
 
+    private Collider2D itemCollider;
+
+    private float timeToDisable = 0.3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +23,8 @@ public class Item : MonoBehaviour
             gameObject.SetActive(true);
 
             animator = GetComponent<Animator>();
+
+            itemCollider = GetComponent<Collider2D>();
         }
     }
 
@@ -27,6 +33,8 @@ public class Item : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+
+            itemCollider.enabled = false;
             
             animator.SetBool("collected", true);
    
@@ -40,7 +48,7 @@ public class Item : MonoBehaviour
 
     IEnumerator DisableItem()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(timeToDisable);
         gameObject.SetActive(false);
     }
 }
