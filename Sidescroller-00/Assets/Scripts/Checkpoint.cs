@@ -7,6 +7,10 @@ public class Checkpoint : MonoBehaviour
     private Animator animator;
 
     public static bool isCheckpointActivated = false;
+    
+    public static int timesCheckpointUsed = 0;
+
+    public static bool isLastRespawnAllowed = false;
 
     private int checkpointUseLimit = 4;
     public int CheckpointUseLimit { get { return checkpointUseLimit; } }
