@@ -7,6 +7,17 @@ public class FallingTrap : MonoBehaviour
     [SerializeField]
     private float timeToFall = 2f;
 
+    private Collider2D trapCollider;
+
+    private TargetJoint2D trapTargetJoint;
+
+    private void Start()
+    {
+        trapCollider = GetComponent<Collider2D>();
+
+        trapTargetJoint = GetComponent<TargetJoint2D>();
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player")){
@@ -17,6 +28,11 @@ public class FallingTrap : MonoBehaviour
     IEnumerator Fall()
     {
         yield return new WaitForSeconds(timeToFall);
-        gameObject.GetComponent<TargetJoint2D>().enabled = false;
+        
+        trapTargetJoint.enabled = false;
+
+        trapCollider.enabled = false;
+
+
     }
 }
