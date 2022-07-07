@@ -74,8 +74,6 @@ public class Player : MonoBehaviour
         {
             isAlive = false;
 
-            PlayerData.playerLifePointsBeforeInstaDeath = lifePoints;
-
             lifePoints = 0;
 
             animator.SetTrigger("death");
@@ -114,7 +112,7 @@ public class Player : MonoBehaviour
         }
         else if (Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
         {
-            lifePoints = PlayerData.playerLifePointsBeforeInstaDeath;
+            lifePoints = PlayerData.playerLifePointsSaved;
            
             transform.position = LevelData.checkpointPosition;
         }

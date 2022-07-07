@@ -8,7 +8,7 @@ public static class PlayerData
 
     public static int playerLifePoints;
 
-    public static int playerLifePointsBeforeInstaDeath;
+    public static int playerLifePointsSaved;
 
     public static string PlayerLevelRank()
     {
