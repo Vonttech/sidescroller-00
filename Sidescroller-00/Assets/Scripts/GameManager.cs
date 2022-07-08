@@ -7,6 +7,12 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+
+    /*
+     CRIAR CLASSE PARA O OBJETO QUE IRÁ GERENCIAR OS PAINEIS DE INTRO DO LEVEL
+     CRIAR CLASSE PARA O OBJETO QUE IRÁ GERENCIAR OS PONTOS DE RESPAWN DO LEVEL 
+     */
+
     [SerializeField]
     private Transform startPointPlataform;
     [SerializeField]
@@ -37,8 +43,7 @@ public class GameManager : MonoBehaviour
     private bool isGameOver = false;
 
     private float yPlayerRespawnPosition = 3f;
-
-
+    
     [SerializeField]
     private RectTransform levelIntroPanel;
     private bool isLevelIntroPanelRunning;
