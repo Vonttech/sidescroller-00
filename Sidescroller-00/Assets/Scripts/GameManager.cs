@@ -9,16 +9,13 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private Transform startPointPlataform;
-
     [SerializeField]
     private GameObject checkpoint;
-
     [SerializeField]
     private Checkpoint checkpointScript;
 
     [SerializeField]
     private GameObject playerGameObject;
-
     [SerializeField]
     private Player playerScript;
 
@@ -27,9 +24,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private RawImage[] lifePointsImageGameObject = new RawImage[3];
-
     [SerializeField]
     private Sprite loseLifePointImage;
+    private int playerLifePointsCount;
 
     [SerializeField]
     private GameObject gameOverPanel;
@@ -37,15 +34,31 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject trophy;
 
-    private int playerLifePointsCount;
-
     private bool isGameOver = false;
 
     private float yPlayerRespawnPosition = 3f;
 
 
+    [SerializeField]
+    private RectTransform levelIntroPanel;
+    private bool isLevelIntroPanelRunning;
+    private bool isHideLevelIntroPanel = false;
+    private float counterToHideLevelIntroPanel;
+    private float timerLimitToHideLevelIntroPanel = 3f;
+    private float yLevelIntroPanelTopLimit = 700f;
+    private float yLevelIntroPanelBottomLimit = 300f;
+    private float levelIntroPanelSpeedIn = 360f;
+    private float levelIntroPanelSpeedOut = 760f;
+
+
     private void Awake()
     {
+        isLevelIntroPanelRunning = true;
+
+        PlayerController.isAllowedToMove = false;
+
+        counterToHideLevelIntroPanel = 0;
+
         SetLevelRespawnPointsPosition();
     }
 
@@ -56,7 +69,7 @@ public class GameManager : MonoBehaviour
         Trophy.isPlayerBeatLevel = false;
 
         PlayerData.playerInitialLifePoints = playerScript.LifePoints;
-
+        
         CountTotalFruitsInLevel();
 
         CheckCheckpointUseLimit();
@@ -67,9 +80,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        DisplayLevelIntroPanel();
+        
         RestartFromCheckpoint();
+        
         CountPoints();
+        
         CheckPlayerLifePoints();
+        
         PlayerBeatLevel();
     }
 
@@ -165,6 +184,51 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void DisplayLevelIntroPanel() 
+    {
+        if (levelIntroPanel.transform.localPosition.y >= yLevelIntroPanelBottomLimit && !isHideLevelIntroPanel)
+        {
+            levelIntroPanel.transform.localPosition -= Vector3.up * levelIntroPanelSpeedIn * Time.deltaTime;
+        }
+        else
+        {
+            CountToHideLevelIntroPanel();
+        }
+    }
+    private void CountToHideLevelIntroPanel()
+    {
+        if(counterToHideLevelIntroPanel <= timerLimitToHideLevelIntroPanel) 
+        {
+            counterToHideLevelIntroPanel += Time.deltaTime;
+
+        }else if(counterToHideLevelIntroPanel >= timerLimitToHideLevelIntroPanel)
+        {
+            isHideLevelIntroPanel = true;
+            HideLevelIntroPanel();
+        }
+    }
+    private void HideLevelIntroPanel()
+    {
+        if( levelIntroPanel.transform.localPosition.y <= yLevelIntroPanelTopLimit &&
+            isHideLevelIntroPanel)
+        {
+            levelIntroPanel.transform.localPosition += Vector3.up * levelIntroPanelSpeedOut * Time.deltaTime;
+        }
+        else
+        {
+            isLevelIntroPanelRunning = false;
+            AllowPlayerMovement();
+        }
+    }
+
+    private void AllowPlayerMovement()
+    {
+        if (!isLevelIntroPanelRunning)
+        {
+            PlayerController.isAllowedToMove = true;
+        }
+    }
+
     public static void ResetLevelData()
     {
         Player.itemsCollected.Clear();
@@ -178,4 +242,6 @@ public class GameManager : MonoBehaviour
         Checkpoint.isLastRespawnAllowed = false;
 
     }
+
+
 }

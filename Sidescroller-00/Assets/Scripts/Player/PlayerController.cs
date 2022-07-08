@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
     private bool isRunning;
     private bool isJumping;
     private bool isDoubleJumping;
-    private bool isFalling;
-
 
     private int jumpCount = 0;
     private int jumpsLimit = 3;
@@ -23,6 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] float thurst = 10;
     [SerializeField] float hitThurst = 8;
+
+    public static bool isAllowedToMove;
 
     // Start is called before the first frame update
     void Start()
@@ -37,10 +37,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Jump();
-        CheckJumpState();
-        GetAnimatorBoolValues();
+        if (isAllowedToMove)
+        {
+            Move();
+            Jump();
+            CheckJumpState();
+            GetAnimatorBoolValues();
+        }
     }
 
     private void GetAnimatorBoolValues()
@@ -49,7 +52,6 @@ public class PlayerController : MonoBehaviour
         isRunning           = animator.GetBool("isRunning");
         isJumping           = animator.GetBool("isJumping");
         isDoubleJumping     = animator.GetBool("isDoubleJumping");
-        isFalling           = animator.GetBool("isRunning");
     }
 
     private void FixedUpdate()
