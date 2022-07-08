@@ -399,6 +399,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: playDoubleJump
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -435,7 +441,7 @@ AnimatorStateMachine:
     m_Position: {x: 550, y: 90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2577038505983272849}
-    m_Position: {x: 690, y: 270, z: 0}
+    m_Position: {x: 670, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -89199069266030412}
     m_Position: {x: 560, y: 0, z: 0}

@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEditor;
 
 public class GameOverManager : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI itemsCollected;
+    private Text itemsCollected;
 
     [SerializeField]
-    private TextMeshProUGUI playerRank;
+    private Text playerRank;
 
     // Start is called before the first frame update
     void Start()

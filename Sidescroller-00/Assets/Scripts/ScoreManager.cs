@@ -1,17 +1,17 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI itemsCollected;
+    private Text itemsCollected;
 
     [SerializeField]
-    private TextMeshProUGUI playerRank;
+    private Text playerRank;
 
     [SerializeField]
-    private TextMeshProUGUI lifePointsRemaining;
+    private Text lifePointsRemaining;
 
     // Start is called before the first frame update
     void Start()

@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private Player playerScript;
 
     [SerializeField]
-    private TextMeshProUGUI pointsTextField;
+    private Text pointsTextField;
 
     [SerializeField]
     private RawImage[] lifePointsImageGameObject = new RawImage[3];
