@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/JojoFrogLevel1.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/MainMenu.unity
+    guid: a2d9133b95a24074c809645d883e92b8
   - enabled: 1
     path: Assets/Scenes/ScoreScene.unity
     guid: 4afa731092546e945b76a9c115da2818
   - enabled: 1
     path: Assets/Scenes/GameOverScene.unity
     guid: 885700753a298674794ee6a1a5be0b8b
+  - enabled: 1
+    path: Assets/Scenes/JojoFrogLevel1.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
