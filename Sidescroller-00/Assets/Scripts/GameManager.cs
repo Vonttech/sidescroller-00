@@ -1,15 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {
 
     /*
-     CRIAR CLASSE PARA O OBJETO QUE IRÁ GERENCIAR OS PAINEIS DE INTRO DO LEVEL
      CRIAR CLASSE PARA O OBJETO QUE IRÁ GERENCIAR OS PONTOS DE RESPAWN DO LEVEL 
      */
 
@@ -38,21 +35,26 @@ public class GameManager : MonoBehaviour
     private GameObject gameOverPanel;
 
     [SerializeField]
+    private GameObject pauseMenuPanel;
+
+    [SerializeField]
     private GameObject trophy;
+
+    [SerializeField]
+    private SceneHandler sceneHandler;
 
     private bool isGameOver = false;
 
     private float yPlayerRespawnPosition = 3f;
 
     [SerializeField]
-    private IntroPanelManager introPanelManager;
-    
+    private IntroPanelManager introPanelManager;    
   
     private void Awake()
     {
         PlayerController.isAllowedToMove = false;
 
-        SceneLoader.currentSceneID = SceneManager.GetActiveScene().buildIndex;
+        SceneHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
 
         SetLevelRespawnPointsPosition();
     }
@@ -64,7 +66,7 @@ public class GameManager : MonoBehaviour
         Trophy.isPlayerBeatLevel = false;
 
         PlayerData.playerInitialLifePoints = playerScript.LifePoints;
-        
+
         CountTotalFruitsInLevel();
 
         CheckCheckpointUseLimit();
@@ -86,6 +88,8 @@ public class GameManager : MonoBehaviour
         CheckPlayerLifePoints();
         
         PlayerBeatLevel();
+
+        sceneHandler.ChangePauseGameState();
     }
 
     private void RespawnPlayerFromStartPoint()
@@ -102,16 +106,20 @@ public class GameManager : MonoBehaviour
 
     private void RestartFromCheckpoint()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) &&
-            !playerScript.IsAlive &&
+        if (Input.anyKeyDown && !playerScript.IsAlive &&
             Checkpoint.isCheckpointActivated)
         {
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-            Checkpoint.timesCheckpointUsed++;
-
+            StartCoroutine("CountToRespawn");
         }
+    }
+
+    IEnumerator CountToRespawn()
+    {
+        yield return new WaitForSeconds(2f);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        Checkpoint.timesCheckpointUsed++;
     }
 
     private void CheckCheckpointUseLimit()
@@ -172,6 +180,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+   
+
     private void CountTotalFruitsInLevel()
     {
         if( LevelData.totalFruitsInLevel == 0)
@@ -201,6 +211,5 @@ public class GameManager : MonoBehaviour
         Checkpoint.isLastRespawnAllowed = false;
 
     }
-
 
 }

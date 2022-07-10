@@ -26,7 +26,7 @@ public class GameOverManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneLoader.currentSceneID);
+        SceneManager.LoadScene(SceneHandler.currentSceneID);
 
         GameManager.ResetLevelData();
 

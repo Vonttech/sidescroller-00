@@ -107,6 +107,7 @@ public class Player : MonoBehaviour
     {
         if (!Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
         {
+            
             transform.position = LevelData.levelStartPoint;
 
         }
@@ -114,7 +115,6 @@ public class Player : MonoBehaviour
         {
             lifePoints = PlayerData.playerLifePointsSaved;
            
-            transform.position = LevelData.checkpointPosition;
         }
         else if (Checkpoint.isLastRespawnAllowed)
         {
