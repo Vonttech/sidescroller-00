@@ -19,16 +19,25 @@ public class IntroPanelManager : MonoBehaviour
 
     private void Awake()
     {
-        isLevelIntroPanelRunning = true;
+        if (Checkpoint.isCheckpointActivated)
+        {
+            isLevelIntroPanelRunning = false;
+        }
+        else
+        {
+            isLevelIntroPanelRunning = true;
 
 
-        counterToHideLevelIntroPanel = 0;
+            counterToHideLevelIntroPanel = 0;
+        }
     }
 
 
     public void DisplayLevelIntroPanel()
     {
-        if (levelIntroPanel.transform.localPosition.y >= yLevelIntroPanelBottomLimit && !isHideLevelIntroPanel)
+        if (levelIntroPanel.transform.localPosition.y >= yLevelIntroPanelBottomLimit && 
+            !isHideLevelIntroPanel &&
+            !Checkpoint.isCheckpointActivated)
         {
             levelIntroPanel.transform.localPosition -= Vector3.up * levelIntroPanelSpeedIn * Time.deltaTime;
         }
