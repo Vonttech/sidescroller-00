@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using UnityEditor;
 public class GameManager : MonoBehaviour
 {
 
@@ -41,20 +41,24 @@ public class GameManager : MonoBehaviour
     private GameObject trophy;
 
     [SerializeField]
-    private SceneHandler sceneHandler;
+    private SceneLoadHandler sceneHandler;
 
     private bool isGameOver = false;
 
     private float yPlayerRespawnPosition = 3f;
 
     [SerializeField]
-    private IntroPanelManager introPanelManager;    
-  
+    private IntroPanelManager introPanelManager;
+
+
+    private bool isGamePaused = false;
+    public bool IsGamePaused { get { return isGamePaused; } }
+
     private void Awake()
     {
         PlayerController.isAllowedToMove = false;
 
-        SceneHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
+        SceneLoadHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
 
         SetLevelSpawnPointsPosition();
 
@@ -90,7 +94,7 @@ public class GameManager : MonoBehaviour
         
         PlayerBeatLevel();
 
-        sceneHandler.ChangePauseGameState();
+        ChangePauseGameState();
     }
 
     private void SpawnPlayerFromStartPoint()
@@ -204,6 +208,47 @@ public class GameManager : MonoBehaviour
         {
             PlayerController.isAllowedToMove = true;
         }
+    }
+
+
+    public void ChangePauseGameState()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && !isGamePaused)
+        {
+
+            PauseGame();
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && isGamePaused)
+        {
+
+            ResumeGame();
+
+        }
+    }
+
+    private void PauseGame()
+    {
+        isGamePaused = true;
+        Time.timeScale = 0f;
+        AudioListener.pause = true;
+    }
+
+    public void ResumeGame()
+    {
+        isGamePaused = false;
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+    }
+
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
     }
 
     public static void ResetLevelData()
