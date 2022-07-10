@@ -10,12 +10,6 @@ public class GameManager : MonoBehaviour
      CRIAR CLASSE PARA O OBJETO QUE IRÁ GERENCIAR OS PONTOS DE RESPAWN DO LEVEL 
      */
 
-    [SerializeField]
-    private Transform startPointPlataform;
-    [SerializeField]
-    private GameObject checkpoint;
-    [SerializeField]
-    private Checkpoint checkpointScript;
 
     [SerializeField]
     private GameObject playerGameObject;
@@ -43,16 +37,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private SceneLoadHandler sceneHandler;
 
-    private bool isGameOver = false;
-
-    private float yPlayerRespawnPosition = 3f;
-
     [SerializeField]
     private IntroPanelManager introPanelManager;
 
+    [SerializeField]
+    private SpawnPointsHandler spawnPointsHandler;
 
     private bool isGamePaused = false;
-    public bool IsGamePaused { get { return isGamePaused; } }
+    private bool isGameOver = false;
+
 
     private void Awake()
     {
@@ -60,7 +53,7 @@ public class GameManager : MonoBehaviour
 
         SceneLoadHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
 
-        SetLevelSpawnPointsPosition();
+        spawnPointsHandler.SetLevelSpawnPointsPosition();
 
     }
 
@@ -74,7 +67,7 @@ public class GameManager : MonoBehaviour
 
         CountTotalFruitsInLevel();
 
-        CheckCheckpointUseLimit();
+        spawnPointsHandler.CheckCheckpointUseLimit();
 
         SpawnPlayerFromStartPoint();
     }
@@ -109,16 +102,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-   private void SetLevelSpawnPointsPosition()
-    {
-        LevelData.levelStartPoint = startPointPlataform.transform.position + (Vector3.up * yPlayerRespawnPosition);
-
-        LevelData.checkpointPosition = checkpoint.transform.position + (Vector3.up * yPlayerRespawnPosition);
-    }
+ 
 
     private void RestartFromCheckpoint()
     {
-        if (Input.anyKeyDown && !playerScript.IsAlive &&
+        if (!playerScript.IsAlive &&
             Checkpoint.isCheckpointActivated)
         {
             StartCoroutine("CountToRespawn");
@@ -134,19 +122,7 @@ public class GameManager : MonoBehaviour
         Checkpoint.timesCheckpointUsed++;
     }
 
-    private void CheckCheckpointUseLimit()
-    {
-        if(Checkpoint.timesCheckpointUsed > checkpointScript.CheckpointUseLimit &&
-            Checkpoint.isCheckpointActivated)
-        {
-
-            Checkpoint.isLastRespawnAllowed = true;
-
-            Checkpoint.isCheckpointActivated = false;
-
-            checkpoint.SetActive(false);
-        }
-    }
+  
 
     private void CountPoints()
     {
@@ -232,6 +208,7 @@ public class GameManager : MonoBehaviour
         isGamePaused = true;
         Time.timeScale = 0f;
         AudioListener.pause = true;
+        pauseMenuPanel.SetActive(true);
     }
 
     public void ResumeGame()
@@ -239,6 +216,7 @@ public class GameManager : MonoBehaviour
         isGamePaused = false;
         Time.timeScale = 1f;
         AudioListener.pause = false;
+        pauseMenuPanel.SetActive(false);
     }
 
 

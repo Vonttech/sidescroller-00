@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3532083881521208821
+--- !u!1 &703005339237329089
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3532083881521208827}
-  - component: {fileID: 3532083881521208820}
+  - component: {fileID: 703005339237329091}
+  - component: {fileID: 703005339237329090}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: SpawnPointsHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3532083881521208827
+--- !u!4 &703005339237329091
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3532083881521208821}
+  m_GameObject: {fileID: 703005339237329089}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,29 +31,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3532083881521208820
+--- !u!114 &703005339237329090
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3532083881521208821}
+  m_GameObject: {fileID: 703005339237329089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f5d5a2555eca2f47b8561e25df03e4b, type: 3}
+  m_Script: {fileID: 11500000, guid: 919b2b99512f5a04f905c91c6cc7a687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerGameObject: {fileID: 0}
-  playerScript: {fileID: 0}
-  pointsTextField: {fileID: 0}
-  lifePointsImageGameObject:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  loseLifePointImage: {fileID: 21300000, guid: 89fcc6c00a73e9d438f121ac123f8a8f, type: 3}
-  gameOverPanel: {fileID: 0}
-  pauseMenuPanel: {fileID: 0}
-  trophy: {fileID: 0}
-  sceneHandler: {fileID: 882922287854168084, guid: eaeeb4bdf18ba8d41a0bfe74bfefe48f, type: 3}
-  introPanelManager: {fileID: 0}
-  spawnPointsHandler: {fileID: 0}
+  startPointPlataform: {fileID: 0}
+  checkpoint: {fileID: 0}
+  checkpointScript: {fileID: 0}
