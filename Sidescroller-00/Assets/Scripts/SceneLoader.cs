@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEditor;
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance { get; private set; }
@@ -51,5 +49,14 @@ public class SceneLoader : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(InitialLevelScene);
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
     }
 }
