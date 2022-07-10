@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEditor;
-public class SceneHandler : MonoBehaviour
+
+public class SceneLoadHandler : MonoBehaviour
 {
-    public static SceneHandler Instance { get; private set; }
+    public static SceneLoadHandler Instance { get; private set; }
 
     public static int currentSceneID;
 
@@ -13,10 +13,6 @@ public class SceneHandler : MonoBehaviour
         get { return initialLevelScene; } 
         private set {}
     }
-
-
-    private bool isGamePaused = false;
-    public bool IsGamePaused { get { return isGamePaused; } }
 
     private void Awake()
     {
@@ -54,43 +50,5 @@ public class SceneHandler : MonoBehaviour
         SceneManager.LoadScene(InitialLevelScene);
     }
 
-    public void ChangePauseGameState()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isGamePaused)
-        {
-
-            PauseGame();
-
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && isGamePaused)
-        {
-
-            ResumeGame();
-
-        }
-    }
-
-    private void PauseGame()
-    {
-        isGamePaused = true;
-        Time.timeScale = 0f;
-        AudioListener.pause = true;
-    }
-
-    public void ResumeGame()
-    {
-        isGamePaused = false;
-        Time.timeScale = 1f;
-        AudioListener.pause = false;
-    }
-
-
-    public void ExitGame()
-    {
-#if UNITY_EDITOR
-        EditorApplication.ExitPlaymode();
-#else
-        Application.Quit();
-#endif
-    }
+   
 }
