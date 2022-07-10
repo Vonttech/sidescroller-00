@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
     {
         PlayerController.isAllowedToMove = false;
 
+        SceneLoader.currentSceneID = SceneManager.GetActiveScene().buildIndex;
+
         SetLevelRespawnPointsPosition();
     }
 
