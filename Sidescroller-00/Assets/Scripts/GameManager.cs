@@ -56,7 +56,8 @@ public class GameManager : MonoBehaviour
 
         SceneHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
 
-        SetLevelRespawnPointsPosition();
+        SetLevelSpawnPointsPosition();
+
     }
 
     private void Start()
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
 
         CheckCheckpointUseLimit();
 
-        RespawnPlayerFromStartPoint();
+        SpawnPlayerFromStartPoint();
     }
 
     // Update is called once per frame
@@ -92,12 +93,19 @@ public class GameManager : MonoBehaviour
         sceneHandler.ChangePauseGameState();
     }
 
-    private void RespawnPlayerFromStartPoint()
+    private void SpawnPlayerFromStartPoint()
     {
-        playerGameObject.transform.position = LevelData.levelStartPoint;
+        if (!Checkpoint.isCheckpointActivated)
+        {
+            playerGameObject.transform.position = LevelData.levelStartPoint;
+        }
+        else
+        {
+            RestartFromCheckpoint();
+        }
     }
 
-   private void SetLevelRespawnPointsPosition()
+   private void SetLevelSpawnPointsPosition()
     {
         LevelData.levelStartPoint = startPointPlataform.transform.position + (Vector3.up * yPlayerRespawnPosition);
 
@@ -200,6 +208,7 @@ public class GameManager : MonoBehaviour
 
     public static void ResetLevelData()
     {
+
         Player.itemsCollected.Clear();
 
         PlayerData.playerFruitPoints = 0;
