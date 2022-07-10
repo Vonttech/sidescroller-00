@@ -23,8 +23,7 @@ public class ScoreManager : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadScene(0);
-
+        SceneLoader.NextLevel();
         GameManager.ResetLevelData();
     }
 }
