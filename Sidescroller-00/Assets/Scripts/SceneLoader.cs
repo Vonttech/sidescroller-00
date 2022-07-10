@@ -31,14 +31,20 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    public void NextLevel()
+    public static void NextLevel()
     {
-        int sceneToLoad = currentSceneID++;
 
-        bool isSceneToLoadValid = SceneManager.GetSceneAt(sceneToLoad).IsValid();
-        
-        if (isSceneToLoadValid){
-            SceneManager.LoadScene(sceneToLoad);
+        int nextSceneToLoadIndex = currentSceneID + 1;
+
+        try
+        {
+            Scene nextSceneToLoad = SceneManager.GetSceneAt(nextSceneToLoadIndex);
+
+            SceneManager.LoadScene(nextSceneToLoad.name);
+
+        }catch
+        {
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
