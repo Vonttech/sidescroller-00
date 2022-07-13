@@ -10,6 +10,8 @@ public class Item : MonoBehaviour
 
     private float timeToDisable = 0.3f;
 
+    private AudioSource itemAudioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,8 @@ public class Item : MonoBehaviour
             animator = GetComponent<Animator>();
 
             itemCollider = GetComponent<Collider2D>();
+
+            itemAudioSource = GetComponent<AudioSource>();
         }
     }
 
@@ -33,6 +37,7 @@ public class Item : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            itemAudioSource.Play();
 
             itemCollider.enabled = false;
             

@@ -8,7 +8,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidBody;
     
     private Animator animator;
-    
+
+    private AudioSource playerAudioSource;
+
     private bool isHitTaken;
     private bool isPlayerOnGround;
     private bool isRunning;
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float thurst = 10;
     [SerializeField] float hitThurst = 8;
 
+    [SerializeField] AudioClip hitAudio;
+
     public static bool isAllowedToMove;
 
     // Start is called before the first frame update
@@ -30,6 +34,8 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
 
         animator = GetComponent<Animator>();
+
+        playerAudioSource = GetComponent<AudioSource>();
 
         isHitTaken = false;
     }
@@ -53,12 +59,6 @@ public class PlayerController : MonoBehaviour
         isJumping           = animator.GetBool("isJumping");
         isDoubleJumping     = animator.GetBool("isDoubleJumping");
     }
-
-    private void FixedUpdate()
-    {
-
-    }
-
 
     private void Move()
     {
@@ -117,6 +117,8 @@ public class PlayerController : MonoBehaviour
         {
             isPlayerOnGround = false;
 
+            playerAudioSource.Play();
+
             animator.SetBool("isPlayerOnGround", isPlayerOnGround);
 
             rigidBody.AddForce(transform.up * thurst, ForceMode2D.Impulse);
@@ -130,6 +132,8 @@ public class PlayerController : MonoBehaviour
             jumpCount < jumpsLimit)
         {
             rigidBody.AddForce(transform.up * thurst, ForceMode2D.Impulse);
+
+            playerAudioSource.Play();
 
             isDoubleJumping = true;
 
@@ -194,10 +198,11 @@ public class PlayerController : MonoBehaviour
 
             isHitTaken = true;
 
+            playerAudioSource.PlayOneShot(hitAudio);
+
             rigidBody.AddForce((transform.up + (-transform.right)) * hitThurst, ForceMode2D.Impulse);
 
             GetComponent<Player>().LifePoints--;
-
 
             animator.SetBool("isJumping", false);
 
