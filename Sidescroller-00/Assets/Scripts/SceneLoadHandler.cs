@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class SceneLoadHandler : MonoBehaviour
 {
     public static SceneLoadHandler Instance { get; private set; }
@@ -14,6 +14,9 @@ public class SceneLoadHandler : MonoBehaviour
         private set {}
     }
 
+    [SerializeField]
+    private Image fadeImage;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -24,8 +27,10 @@ public class SceneLoadHandler : MonoBehaviour
         {
             Instance = this;
             currentSceneID = SceneManager.GetActiveScene().buildIndex;
+            GetComponent<Animator>().SetTrigger("fadeIn");
             DontDestroyOnLoad(this);
         }
+
     }
 
     public static void NextLevel()
@@ -46,6 +51,12 @@ public class SceneLoadHandler : MonoBehaviour
     }
 
     public void StartGame()
+    {
+        GetComponent<Animator>().SetTrigger("fadeOut");
+        //SceneManager.LoadScene(InitialLevelScene);
+    }
+
+    public void DoNothing()
     {
         SceneManager.LoadScene(InitialLevelScene);
     }
