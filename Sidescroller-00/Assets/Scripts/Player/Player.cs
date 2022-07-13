@@ -32,10 +32,6 @@ public class Player : MonoBehaviour
 
     private Animator animator;
 
-    private void Awake()
-    {
-        
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -119,6 +115,7 @@ public class Player : MonoBehaviour
         }
         else if (Checkpoint.isLastRespawnAllowed)
         {
+         
             transform.position = LevelData.checkpointPosition;
 
             Checkpoint.isLastRespawnAllowed = false;

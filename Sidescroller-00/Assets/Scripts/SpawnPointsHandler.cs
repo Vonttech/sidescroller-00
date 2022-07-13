@@ -22,9 +22,12 @@ public class SpawnPointsHandler : MonoBehaviour
 
     public void SetLevelSpawnPointsPosition()
     {
-        LevelData.levelStartPoint = startPointPlataform.transform.position + (Vector3.up * yPlayerRespawnPosition);
+        if (LevelData.levelStartPoint == Vector3.zero && LevelData.checkpointPosition == Vector3.zero)
+        {
+            LevelData.levelStartPoint = startPointPlataform.transform.position + (Vector3.up * yPlayerRespawnPosition);
 
-        LevelData.checkpointPosition = checkpoint.transform.position + (Vector3.up * yPlayerRespawnPosition);
+            LevelData.checkpointPosition = checkpoint.transform.position + (Vector3.up * yPlayerRespawnPosition);
+        }
     }
 
 
@@ -33,9 +36,9 @@ public class SpawnPointsHandler : MonoBehaviour
         if (Checkpoint.timesCheckpointUsed > checkpointScript.CheckpointUseLimit &&
             Checkpoint.isCheckpointActivated)
         {
-
+            
             Checkpoint.isLastRespawnAllowed = true;
-
+       
             Checkpoint.isCheckpointActivated = false;
 
             checkpoint.SetActive(false);

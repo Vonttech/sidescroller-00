@@ -65,9 +65,9 @@ public class GameManager : MonoBehaviour
 
         PlayerData.playerInitialLifePoints = playerScript.LifePoints;
 
-        CountTotalFruitsInLevel();
-
         spawnPointsHandler.CheckCheckpointUseLimit();
+
+        CountTotalFruitsInLevel();
 
         SpawnPlayerFromStartPoint();
     }
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnPlayerFromStartPoint()
     {
-        if (!Checkpoint.isCheckpointActivated)
+        if (!Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
         {
             playerGameObject.transform.position = LevelData.levelStartPoint;
         }
@@ -102,7 +102,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
- 
 
     private void RestartFromCheckpoint()
     {
