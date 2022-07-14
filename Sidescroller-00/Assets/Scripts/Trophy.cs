@@ -17,11 +17,15 @@ public class Trophy : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            isPlayerBeatLevel = true;
-
             trophyAnimator.SetTrigger("WinAnimation");
+
+            GetComponent<AudioSource>().Play();
         }
     }
 
+    private void PlayerBeatLevel()
+    {
+        isPlayerBeatLevel = true;
+    }
 
 }
