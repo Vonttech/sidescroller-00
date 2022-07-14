@@ -17,6 +17,10 @@ public class SceneLoadHandler : MonoBehaviour
     [SerializeField]
     private Image fadeImage;
 
+    private bool shouldStopFade = false;
+
+    private Animator animator;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -26,11 +30,16 @@ public class SceneLoadHandler : MonoBehaviour
         else
         {
             Instance = this;
+            animator = GetComponent<Animator>();
             currentSceneID = SceneManager.GetActiveScene().buildIndex;
-            GetComponent<Animator>().SetTrigger("fadeIn");
             DontDestroyOnLoad(this);
         }
 
+    }
+
+    private void LateUpdate()
+    {
+        CheckIfSceneLoaded();
     }
 
     public static void NextLevel()
@@ -52,13 +61,23 @@ public class SceneLoadHandler : MonoBehaviour
 
     public void StartGame()
     {
-        GetComponent<Animator>().SetTrigger("fadeOut");
+        animator.SetTrigger("fadeOut");
         //SceneManager.LoadScene(InitialLevelScene);
     }
 
-    public void DoNothing()
+    public void LoadScene()
     {
         SceneManager.LoadScene(InitialLevelScene);
+    }
+
+
+    private void CheckIfSceneLoaded()
+    {
+        if (SceneManager.GetActiveScene().isLoaded && !shouldStopFade)
+        {
+            animator.SetTrigger("fadeIn");
+            shouldStopFade = true;
+        }
     }
 
    
