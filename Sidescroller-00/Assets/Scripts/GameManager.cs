@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
     {
         if(playerLifePointsCount > playerScript.LifePoints)
         {
+            //create method to change life points in life bar
             int lastLifePointIndex = playerLifePointsCount - 1;
 
             lifePointsImageGameObject[lastLifePointIndex].texture = loseLifePointImage.texture;
