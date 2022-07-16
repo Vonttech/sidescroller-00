@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingSawRail : MonoBehaviour
@@ -12,13 +10,14 @@ public class MovingSawRail : MonoBehaviour
     private float moveSpeed = 6.75f;
 
     private float moveDistance = 0.1f;
-
+    
     private float topLimitDistance;
     private float bottomLimitDistance;
     private float maxLimitDistance = 0.1f;
 
     [SerializeField]
     private bool moveUp = true;
+
 
     // Update is called once per frame
     void Update()

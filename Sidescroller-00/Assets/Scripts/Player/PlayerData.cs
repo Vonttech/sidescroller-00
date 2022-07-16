@@ -22,35 +22,38 @@ public static class PlayerData
         {
             return "S";
         }
-        else if (playerRankMean < 1f &&
+        
+        if (playerRankMean < 1f &&
                  playerRankMean >= 0.8f)
         {
             return "A";
         }
-        else if (playerRankMean <= 0.8f &&
+        
+        if (playerRankMean <= 0.8f &&
                  playerRankMean >= 0.6f)
         {
             return "B";
         }
-        else if (playerRankMean <= 0.6f &&
+        
+        if (playerRankMean <= 0.6f &&
                  playerRankMean >= 0.4f)
         {
             return "C";
         }
-        else if (playerRankMean <= 0.4f &&
+        
+        if (playerRankMean <= 0.4f &&
                  playerRankMean >= 0.2f)
         {
             return "D";
         }
+        
         if (playerRankMean <= 0.2f &&
                  playerRankMean >= 0.1f)
         {
             return "E";
         }
-        else
-        {
-            return "F";
-        }
+
+        return "F";
 
     }
 

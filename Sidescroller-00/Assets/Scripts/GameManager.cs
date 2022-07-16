@@ -9,19 +9,19 @@ public class GameManager : MonoBehaviour
     private GameObject playerGameObject;
     [SerializeField]
     private Player playerScript;
-
     [SerializeField]
     private Text pointsTextField;
-
     [SerializeField]
     private RawImage[] lifePointsImageGameObject = new RawImage[3];
+    
     [SerializeField]
     private Sprite loseLifePointImage;
+    
     private int playerLifePointsCount;
-
+    
     [SerializeField]
     private GameObject gameOverPanel;
-
+    
     [SerializeField]
     private GameObject pauseMenuPanel;
 
@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         SceneLoadHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
 
         spawnPointsHandler.SetLevelSpawnPointsPosition();
-
     }
 
     private void Start()
@@ -95,8 +94,6 @@ public class GameManager : MonoBehaviour
             RestartFromCheckpoint();
         }
     }
-
-
     private void RestartFromCheckpoint()
     {
         if (!playerScript.IsAlive &&
@@ -105,7 +102,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine("CountToRespawn");
         }
     }
-
     IEnumerator CountToRespawn()
     {
         yield return new WaitForSeconds(2f);
@@ -114,14 +110,10 @@ public class GameManager : MonoBehaviour
 
         Checkpoint.timesCheckpointUsed++;
     }
-
-  
-
     private void CountPoints()
     {
         pointsTextField.text = PlayerData.playerFruitPoints.ToString();
     }
-
     private void CheckPlayerLifePoints()
     {
         if(playerLifePointsCount > playerScript.LifePoints)
@@ -161,8 +153,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("ScoreScene");
         }
     }
-
-   
 
     private void CountTotalFruitsInLevel()
     {

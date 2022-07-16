@@ -23,9 +23,13 @@ public class Trophy : MonoBehaviour
         }
     }
 
-    private void PlayerBeatLevel()
+    private void callPlayerBeatLevel()
     {
+        StartCoroutine(PlayerBeatLevel());
+    }
+    IEnumerator PlayerBeatLevel()
+    {
+        yield return new WaitForSeconds(3f);
         isPlayerBeatLevel = true;
     }
-
 }
