@@ -6,7 +6,6 @@ public class MovingSaw : MonoBehaviour
 {
     [SerializeField]
     private Vector2 limit;
-
     [SerializeField]
     private float speed;
 

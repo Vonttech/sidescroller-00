@@ -40,9 +40,9 @@ public class Item : MonoBehaviour
             itemAudioSource.Play();
 
             itemCollider.enabled = false;
-            
+
             animator.SetBool("collected", true);
-   
+
             Player.itemsCollected.Add(gameObject.name, gameObject);
 
             PlayerData.playerFruitPoints++;

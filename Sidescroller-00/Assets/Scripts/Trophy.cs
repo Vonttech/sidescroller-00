@@ -7,7 +7,7 @@ public class Trophy : MonoBehaviour
     public static bool isPlayerBeatLevel;
 
     private Animator trophyAnimator;
-
+    private bool shouldStopAudio = false;
     private void Start()
     {
         trophyAnimator = GetComponent<Animator>();
@@ -15,8 +15,9 @@ public class Trophy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !shouldStopAudio)
         {
+            shouldStopAudio = true;
             trophyAnimator.SetTrigger("WinAnimation");
 
             GetComponent<AudioSource>().Play();
