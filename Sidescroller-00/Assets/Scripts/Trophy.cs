@@ -1,29 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Trophy : MonoBehaviour
 {
     public static bool isPlayerBeatLevel;
-
-    private Animator trophyAnimator;
-    private bool shouldStopAudio = false;
+    private Animator animator;
+    private AudioSource audioSource;
+    private Collider2D collider;
+    
     private void Start()
     {
-        trophyAnimator = GetComponent<Animator>();
+        collider = GetComponent<Collider2D>();
+        collider.enabled = true;
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !shouldStopAudio)
+        if (collision.CompareTag("Player"))
         {
-            shouldStopAudio = true;
-            trophyAnimator.SetTrigger("WinAnimation");
-
-            GetComponent<AudioSource>().Play();
+            collider.enabled = false;
+            audioSource.Play();
+            animator.SetTrigger("WinAnimation");
         }
     }
-
     private void callPlayerBeatLevel()
     {
         StartCoroutine(PlayerBeatLevel());
