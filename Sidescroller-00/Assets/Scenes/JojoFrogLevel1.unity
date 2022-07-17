@@ -118713,6 +118713,10 @@ PrefabInstance:
       propertyPath: doubleJumpAudio
       value: 
       objectReference: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
+    - target: {fileID: 5064525577167861492, guid: fa39870a190f51c44b0e4622fa9b3542, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5064525577167861493, guid: fa39870a190f51c44b0e4622fa9b3542, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -118761,6 +118765,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5064525577167861502, guid: fa39870a190f51c44b0e4622fa9b3542, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 80e397195ea2940b69ee7bdbded856a5, type: 3}
+    - target: {fileID: 5064525577167861502, guid: fa39870a190f51c44b0e4622fa9b3542, type: 3}
+      propertyPath: spawnSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa39870a190f51c44b0e4622fa9b3542, type: 3}
 --- !u!1001 &5239245926367468087

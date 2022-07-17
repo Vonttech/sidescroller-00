@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 5064525577167861491}
   - component: {fileID: 5064525577167861490}
   - component: {fileID: 5064525577167861488}
-  - component: {fileID: 5064525577167861489}
   - component: {fileID: 5064525577167861502}
+  - component: {fileID: 5064525577167861489}
   - component: {fileID: -6128294044147886983}
   m_Layer: 0
   m_Name: Player
@@ -147,9 +147,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b97b820bb0f29c44c962437b35d972e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doubleJumpAudio: {fileID: 0}
   moveSpeed: 6
   thurst: 10
   hitThurst: 8
+  hitAudio: {fileID: 0}
+--- !u!114 &5064525577167861502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5064525577167861495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccf41da77787414e9312a36dc62d833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSound: {fileID: 0}
+  spawnSound: {fileID: 0}
 --- !u!95 &5064525577167861489
 Animator:
   serializedVersion: 3
@@ -169,18 +185,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5064525577167861502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5064525577167861495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ccf41da77787414e9312a36dc62d833, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &-6128294044147886983
 AudioSource:
   m_ObjectHideFlags: 0
