@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Dictionary<string, GameObject> itemsCollected = new Dictionary<string, GameObject>();
+
     private bool isAlive = true;
     public bool IsAlive
     {
@@ -11,44 +13,47 @@ public class Player : MonoBehaviour
 
         set { isAlive = value; }
     }
-
     private Vector3 playerRespawPos;
     public Vector3 PlayerRespawPos
     {
         get { return playerRespawPos; }
         set { playerRespawPos = value; }
     }
-
     private int lifePoints = 3;
     public int LifePoints
     {
         get { return lifePoints; }
         set { LifePointsSetTreatment(value); }
     }
-
+    
     private Rigidbody2D playerRigidBody;
-
-    public static Dictionary<string ,GameObject> itemsCollected = new Dictionary<string, GameObject>();
-
     private Animator animator;
+    private AudioSource audioSource;
+    private Collider2D m_collider;
+    private bool shouldStopCheckPlayerStatus = false;
+
+    [SerializeField]
+    private AudioClip deathSound;
+    [SerializeField]
+    private AudioClip spawnSound;
 
 
     // Start is called before the first frame update
     void Start()
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
-
         animator = GetComponent<Animator>();
-
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(spawnSound);
+        m_collider = GetComponent<Collider2D>();
+        m_collider.enabled = true;
         SpawnPlayer();
-
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckPlayerStatus();
-
         PlayerData.playerLifePoints = lifePoints;
     }
 
@@ -69,43 +74,35 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("DeadZone"))
         {
             isAlive = false;
-
             lifePoints = 0;
-
             animator.SetTrigger("death");
-
             playerRigidBody.AddForce(transform.up * 45f, ForceMode2D.Impulse);
-
-            StartCoroutine(DisablePlayerSprite());
+            StartCoroutine(DisablePlayer());
         }
     }
    
-    IEnumerator DisablePlayerSprite()
+    IEnumerator DisablePlayer()
     {
         yield return new WaitForSeconds(0.3f);
         gameObject.SetActive(false);
     }
-
-
     private void CheckPlayerStatus()
     {
-        if(lifePoints <= 0)
+        if (lifePoints <= 0 && !shouldStopCheckPlayerStatus)
         {
+            shouldStopCheckPlayerStatus = true;
+            m_collider.enabled = false;
             isAlive = false;
-
+            audioSource.PlayOneShot(deathSound);
             animator.SetTrigger("death");
-
-            StartCoroutine(DisablePlayerSprite());
+            StartCoroutine(DisablePlayer());
         }
     }
-
     private void SpawnPlayer()
     {
         if (!Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
         {
-            
             transform.position = LevelData.levelStartPoint;
-
         }
         else if (Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
         {
@@ -115,9 +112,7 @@ public class Player : MonoBehaviour
         }
         else if (Checkpoint.isLastRespawnAllowed)
         {
-         
             transform.position = LevelData.checkpointPosition;
-
             Checkpoint.isLastRespawnAllowed = false;
         }
     }
