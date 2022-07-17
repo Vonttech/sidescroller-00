@@ -46,10 +46,10 @@ public class PlayerController : MonoBehaviour
     }
     private void GetAnimatorBoolValues()
     {
-        isPlayerOnGround    = animator.GetBool("isPlayerOnGround");
-        isRunning           = animator.GetBool("isRunning");
-        isJumping           = animator.GetBool("isJumping");
-        isDoubleJumping     = animator.GetBool("isDoubleJumping");
+        isPlayerOnGround = animator.GetBool("isPlayerOnGround");
+        isRunning = animator.GetBool("isRunning");
+        isJumping = animator.GetBool("isJumping");
+        isDoubleJumping = animator.GetBool("isDoubleJumping");
     }
     private void Move()
     {
