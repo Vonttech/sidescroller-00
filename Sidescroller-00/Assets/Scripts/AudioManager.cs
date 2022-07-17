@@ -6,11 +6,9 @@ public class AudioManager : MonoBehaviour
 {
     private AudioSource m_AudioSource;
     [SerializeField]
-    private AudioClip checkPointAudio;
-    [SerializeField]
-    private AudioClip trophyAudio;
-    [SerializeField]
     private AudioClip sceneBackgroundMusic;
+    [SerializeField]
+    private AudioClip buttonAudio;
     private bool shouldStopPlayingAudio;
     // Start is called before the first frame update
     void Start()
