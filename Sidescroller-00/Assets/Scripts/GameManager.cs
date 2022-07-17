@@ -183,18 +183,13 @@ public class GameManager : MonoBehaviour
 
             if (!isGamePaused)
             {
-
                 PauseGame();
-
             }
             else if (isGamePaused)
             {
-
-                ResumeGame();
-
+                ResumeGame(null);
             }
         }
-        
     }
 
     private void PauseGame()
@@ -205,14 +200,21 @@ public class GameManager : MonoBehaviour
         pauseMenuPanel.GetComponent<AudioSource>().Play();
     }
 
-    public void ResumeGame()
+    public void ResumeGame(AudioSource buttomAudioSource)
     {
-        isGamePaused = false;
-        Time.timeScale = 1f;   
-        pauseMenuPanel.SetActive(false);
-
+        if (buttomAudioSource != null)
+        {
+            buttomAudioSource.Play();
+        }
+        StartCoroutine(DelayResumeGame());
     }
-
+    IEnumerator DelayResumeGame()
+    {
+        Time.timeScale = 1f;
+        yield return new WaitForSeconds(0.1f);
+        isGamePaused = false;
+        pauseMenuPanel.SetActive(false);
+    }
     public void ExitGame()
     {
 #if UNITY_EDITOR
