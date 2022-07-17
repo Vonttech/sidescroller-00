@@ -127,10 +127,14 @@ public class GameManager : MonoBehaviour
         }
         else if(playerScript.LifePoints == 0)
         {
-            GameOver();
+            StartCoroutine(DelayGameOver());
         }
     }
-
+    IEnumerator DelayGameOver()
+    {
+        yield return new WaitForSeconds(1f);
+        GameOver();
+    }
     private void GameOver()
     {
         if (Checkpoint.isCheckpointActivated)
