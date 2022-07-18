@@ -4,25 +4,15 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private AudioSource m_AudioSource;
+    private AudioSource audioSource;
     [SerializeField]
-    private AudioClip sceneBackgroundMusic;
-    [SerializeField]
-    private AudioClip buttonAudio;
-    private bool shouldStopPlayingAudio;
+    private SceneAudioManagerData sceneAudioManagerData;
+
     // Start is called before the first frame update
     void Start()
     {
-        m_AudioSource = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    private void PlayBackgroundMusic()
-    {
-        m_AudioSource.Play();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = sceneAudioManagerData.sceneBackgroundMusic;
+        audioSource.PlayDelayed(1.30f);
     }
 }
