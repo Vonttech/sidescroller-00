@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e8ad834a5ab77a478b7505e7c4e543f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneAudioManagerData: {fileID: 11400000, guid: 918f1445b294cb64e934f386dc315753, type: 2}
+  sceneAudioManagerData: {fileID: 0}
 --- !u!82 &6763188462757275676
 AudioSource:
   m_ObjectHideFlags: 0

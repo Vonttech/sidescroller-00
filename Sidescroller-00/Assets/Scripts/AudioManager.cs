@@ -13,6 +13,6 @@ public class AudioManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = sceneAudioManagerData.sceneBackgroundMusic;
-        audioSource.PlayDelayed(1.30f);
+        audioSource.PlayDelayed(1f);
     }
 }

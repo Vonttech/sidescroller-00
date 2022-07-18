@@ -3,4 +3,5 @@ using UnityEngine;
 public class SceneAudioManagerData : ScriptableObject
 {
     public AudioClip sceneBackgroundMusic;
+    public AudioClip buttonClickSound;
 }
