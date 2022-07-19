@@ -526,7 +526,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2104858599}
-        m_TargetAssemblyTypeName: SceneHandler, Assembly-CSharp
+        m_TargetAssemblyTypeName: SceneLoadHandler, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
@@ -725,6 +725,10 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 033766cc31c97904bae4404b8a079544, type: 3}
+    - target: {fileID: 6763188462757275676, guid: e6599b97bff7f244cadc899af3e34df9, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6763188462757275677, guid: e6599b97bff7f244cadc899af3e34df9, type: 3}
       propertyPath: sceneAudioManagerData
       value: 
