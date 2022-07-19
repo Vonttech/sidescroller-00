@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
         CountTotalFruitsInLevel();
         SpawnPlayerFromStartPoint();
     }
-    // Update is called once per frame
     void Update()
     {
         introPanelManager.DisplayLevelIntroPanel();
@@ -62,6 +61,35 @@ public class GameManager : MonoBehaviour
         PlayerBeatLevel();
         ChangePauseGameState();
     }
+
+    public static void ResetLevelData()
+    {
+        Player.itemsCollected.Clear();
+        PlayerData.playerFruitPoints = 0;
+        Checkpoint.isCheckpointActivated = false;
+        Checkpoint.timesCheckpointUsed = 0;
+        Checkpoint.isLastRespawnAllowed = false;
+    }
+
+    IEnumerator CountToRespawn()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Checkpoint.timesCheckpointUsed++;
+    }
+    IEnumerator DelayGameOver()
+    {
+        yield return new WaitForSeconds(1f);
+        GameOver();
+    }
+    IEnumerator DelayResumeGame()
+    {
+        Time.timeScale = 1f;
+        yield return new WaitForSeconds(0.1f);
+        isGamePaused = false;
+        pauseMenuPanel.SetActive(false);
+    }
+
     private void SpawnPlayerFromStartPoint()
     {
         if (!Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
@@ -81,12 +109,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine("CountToRespawn");
         }
     }
-    IEnumerator CountToRespawn()
-    {
-        yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Checkpoint.timesCheckpointUsed++;
-    }
     private void CountPoints()
     {
         pointsTextField.text = PlayerData.playerFruitPoints.ToString();
@@ -102,13 +124,8 @@ public class GameManager : MonoBehaviour
         }
         else if(playerScript.LifePoints == 0)
         {
-            StartCoroutine(DelayGameOver());
+            StartCoroutine("DelayGameOver");
         }
-    }
-    IEnumerator DelayGameOver()
-    {
-        yield return new WaitForSeconds(1f);
-        GameOver();
     }
     private void GameOver()
     {
@@ -129,7 +146,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("ScoreScene");
         }
     }
-
     private void CountTotalFruitsInLevel()
     {
         if( LevelData.totalFruitsInLevel == 0)
@@ -143,6 +159,26 @@ public class GameManager : MonoBehaviour
         {
             PlayerController.isAllowedToMove = true;
         }
+    }
+    private void PauseGame()
+    {
+        isGamePaused = true;
+        Time.timeScale = 0f;
+        pauseMenuPanel.SetActive(true);
+        audioManager.ShotSound(audioManagerData.pauseMenuSound);
+    }
+
+    /// <summary>
+    /// Calls a static method to close the application from SceneLoadHandler class
+    /// </summary>
+    public void CallExitGame()
+    {
+        SceneLoadHandler.ExitGame();
+    }
+    public void ResumeGame()
+    {
+        audioManager.ShotSound(audioManagerData.buttonClickSound);
+        StartCoroutine("DelayResumeGame");
     }
     public void ChangePauseGameState()
     {
@@ -158,38 +194,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private void PauseGame()
-    {
-        isGamePaused = true;
-        Time.timeScale = 0f;
-        pauseMenuPanel.SetActive(true);
-        audioManager.ShotSound(audioManagerData.pauseMenuSound);
-    }
-    /// <summary>
-    /// Calls a static method to close the application from SceneLoadHandler class
-    /// </summary>
-    public void CallExitGame()
-    {
-        SceneLoadHandler.ExitGame();
-    }
-    public void ResumeGame()
-    {
-        audioManager.ShotSound(audioManagerData.buttonClickSound);
-        StartCoroutine(DelayResumeGame());
-    }
-    IEnumerator DelayResumeGame()
-    {
-        Time.timeScale = 1f;
-        yield return new WaitForSeconds(0.1f);
-        isGamePaused = false;
-        pauseMenuPanel.SetActive(false);
-    }
-    public static void ResetLevelData()
-    {
-        Player.itemsCollected.Clear();
-        PlayerData.playerFruitPoints = 0;
-        Checkpoint.isCheckpointActivated = false;
-        Checkpoint.timesCheckpointUsed = 0;
-        Checkpoint.isLastRespawnAllowed = false;
-    }
+   
+
 }
