@@ -37,7 +37,6 @@ public class SceneLoadHandler : MonoBehaviour
         }
 
     }
-
     private void LateUpdate()
     {
         CheckIfSceneLoaded();
@@ -45,40 +44,23 @@ public class SceneLoadHandler : MonoBehaviour
 
     public static void NextLevel()
     {
-
         int nextSceneToLoadIndex = currentSceneID + 1;
-
         try
         {
             Scene nextSceneToLoad = SceneManager.GetSceneAt(nextSceneToLoadIndex);
-
             SceneManager.LoadScene(nextSceneToLoad.name);
-
         }catch
         {
             SceneManager.LoadScene("MainMenu");
         }
     }
-
-    public void StartGame()
+    public static void ResetLevelData()
     {
-        animator.SetTrigger("fadeOut");
-        //SceneManager.LoadScene(InitialLevelScene);
-    }
-
-    public void LoadScene()
-    {
-        SceneManager.LoadScene(InitialLevelScene);
-    }
-
-
-    private void CheckIfSceneLoaded()
-    {
-        if (SceneManager.GetActiveScene().isLoaded && !shouldStopFade)
-        {
-            animator.SetTrigger("fadeIn");
-            shouldStopFade = true;
-        }
+        Player.itemsCollected.Clear();
+        PlayerData.playerFruitPoints = 0;
+        Checkpoint.isCheckpointActivated = false;
+        Checkpoint.timesCheckpointUsed = 0;
+        Checkpoint.isLastRespawnAllowed = false;
     }
     public static void ExitGame()
     {
@@ -88,4 +70,29 @@ public class SceneLoadHandler : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    private void CheckIfSceneLoaded()
+    {
+        if (SceneManager.GetActiveScene().isLoaded && !shouldStopFade)
+        {
+            animator.SetTrigger("fadeIn");
+            shouldStopFade = true;
+        }
+    }
+
+    public void StartGame()
+    {
+        animator.SetTrigger("fadeOut");
+    }
+    public void LoadScene()
+    {
+        SceneManager.LoadScene(InitialLevelScene);
+    }
+
+
+    
+
+
+
+
 }

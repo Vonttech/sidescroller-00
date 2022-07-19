@@ -24,6 +24,6 @@ public class ScoreManager : MonoBehaviour
     public void NextLevel()
     {
         SceneLoadHandler.NextLevel();
-        GameManager.ResetLevelData();
+        SceneLoadHandler.ResetLevelData();
     }
 }

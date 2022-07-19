@@ -62,15 +62,6 @@ public class GameManager : MonoBehaviour
         ChangePauseGameState();
     }
 
-    public static void ResetLevelData()
-    {
-        Player.itemsCollected.Clear();
-        PlayerData.playerFruitPoints = 0;
-        Checkpoint.isCheckpointActivated = false;
-        Checkpoint.timesCheckpointUsed = 0;
-        Checkpoint.isLastRespawnAllowed = false;
-    }
-
     IEnumerator CountToRespawn()
     {
         yield return new WaitForSeconds(2f);
@@ -179,6 +170,10 @@ public class GameManager : MonoBehaviour
     {
         audioManager.ShotSound(audioManagerData.buttonClickSound);
         StartCoroutine("DelayResumeGame");
+    }
+    public void CallResetLevelData()
+    {
+        SceneLoadHandler.ResetLevelData();
     }
     public void ChangePauseGameState()
     {
