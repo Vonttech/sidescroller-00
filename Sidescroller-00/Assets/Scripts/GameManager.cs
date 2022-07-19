@@ -5,11 +5,16 @@ using UnityEngine.UI;
 using UnityEditor;
 public class GameManager : MonoBehaviour
 {
+
+    private bool isGamePaused = false;
+    private bool isGameOver = false;
+    private SceneLoadHandler sceneHandler;
+    private int playerLifePointsCount;
+
     [SerializeField]
     private AudioManager audioManager;
     [SerializeField]
     private SceneAudioManagerData audioManagerData;
-
     [SerializeField]
     private GameObject playerGameObject;
     [SerializeField]
@@ -18,33 +23,18 @@ public class GameManager : MonoBehaviour
     private Text pointsTextField;
     [SerializeField]
     private RawImage[] lifePointsImageGameObject = new RawImage[3];
-    
     [SerializeField]
     private Sprite loseLifePointImage;
-    
-    private int playerLifePointsCount;
-    
     [SerializeField]
     private GameObject gameOverPanel;
-    
     [SerializeField]
     private GameObject pauseMenuPanel;
-
     [SerializeField]
     private GameObject trophy;
-
-    [SerializeField]
-    private SceneLoadHandler sceneHandler;
-
     [SerializeField]
     private IntroPanelManager introPanelManager;
-
     [SerializeField]
     private SpawnPointsHandler spawnPointsHandler;
-
-    private bool isGamePaused = false;
-    private bool isGameOver = false;
-
 
     private void Awake()
     {
@@ -175,6 +165,13 @@ public class GameManager : MonoBehaviour
         pauseMenuPanel.SetActive(true);
         audioManager.ShotSound(audioManagerData.pauseMenuSound);
     }
+    /// <summary>
+    /// Calls a static method to close the application from SceneLoadHandler class
+    /// </summary>
+    public void CallExitGame()
+    {
+        SceneLoadHandler.ExitGame();
+    }
     public void ResumeGame()
     {
         audioManager.ShotSound(audioManagerData.buttonClickSound);
@@ -186,14 +183,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         isGamePaused = false;
         pauseMenuPanel.SetActive(false);
-    }
-    public void ExitGame()
-    {
-#if UNITY_EDITOR
-        EditorApplication.ExitPlaymode();
-#else
-        Application.Quit();
-#endif
     }
     public static void ResetLevelData()
     {
