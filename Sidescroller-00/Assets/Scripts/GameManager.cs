@@ -6,6 +6,11 @@ using UnityEditor;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
+    private AudioManager audioManager;
+    [SerializeField]
+    private SceneAudioManagerData audioManagerData;
+
+    [SerializeField]
     private GameObject playerGameObject;
     [SerializeField]
     private Player playerScript;
@@ -44,45 +49,29 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         PlayerController.isAllowedToMove = false;
-
         SceneLoadHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
-
         spawnPointsHandler.SetLevelSpawnPointsPosition();
     }
-
     private void Start()
     {
         playerLifePointsCount = playerScript.LifePoints;
-
         Trophy.isPlayerBeatLevel = false;
-
         PlayerData.playerInitialLifePoints = playerScript.LifePoints;
-
         spawnPointsHandler.CheckCheckpointUseLimit();
-
         CountTotalFruitsInLevel();
-
         SpawnPlayerFromStartPoint();
     }
-
     // Update is called once per frame
     void Update()
     {
         introPanelManager.DisplayLevelIntroPanel();
-
         AllowPlayerMovement();
-
         RestartFromCheckpoint();
-        
         CountPoints();
-        
         CheckPlayerLifePoints();
-        
         PlayerBeatLevel();
-
         ChangePauseGameState();
     }
-
     private void SpawnPlayerFromStartPoint()
     {
         if (!Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
@@ -105,9 +94,7 @@ public class GameManager : MonoBehaviour
     IEnumerator CountToRespawn()
     {
         yield return new WaitForSeconds(2f);
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
         Checkpoint.timesCheckpointUsed++;
     }
     private void CountPoints()
@@ -120,9 +107,7 @@ public class GameManager : MonoBehaviour
         {
             //create method to change life points in life bar
             int lastLifePointIndex = playerLifePointsCount - 1;
-
             lifePointsImageGameObject[lastLifePointIndex].texture = loseLifePointImage.texture;
-
             playerLifePointsCount--;
         }
         else if(playerScript.LifePoints == 0)
@@ -140,16 +125,13 @@ public class GameManager : MonoBehaviour
         if (Checkpoint.isCheckpointActivated)
         {
             isGameOver = true;
-
             gameOverPanel.SetActive(isGameOver);
-
         }
         else
         {
             SceneManager.LoadScene("GameOverScene");
         }
     }
-
     private void PlayerBeatLevel()
     {
         if (Trophy.isPlayerBeatLevel)
@@ -165,7 +147,6 @@ public class GameManager : MonoBehaviour
             LevelData.totalFruitsInLevel = GameObject.FindGameObjectsWithTag("Fruit").Length;
         }
     }
-
     private void AllowPlayerMovement()
     {
         if (!introPanelManager.IsLevelIntroPanelRunning)
@@ -173,39 +154,30 @@ public class GameManager : MonoBehaviour
             PlayerController.isAllowedToMove = true;
         }
     }
-
-
     public void ChangePauseGameState()
     {
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
             if (!isGamePaused)
             {
                 PauseGame();
             }
             else if (isGamePaused)
             {
-                ResumeGame(null);
+                ResumeGame();
             }
         }
     }
-
     private void PauseGame()
     {
         isGamePaused = true;
         Time.timeScale = 0f;
         pauseMenuPanel.SetActive(true);
-        pauseMenuPanel.GetComponent<AudioSource>().Play();
+        audioManager.ShotSound(audioManagerData.pauseMenuSound);
     }
-
-    public void ResumeGame(AudioSource buttomAudioSource)
+    public void ResumeGame()
     {
-        if (buttomAudioSource != null)
-        {
-            buttomAudioSource.Play();
-        }
+        audioManager.ShotSound(audioManagerData.buttonClickSound);
         StartCoroutine(DelayResumeGame());
     }
     IEnumerator DelayResumeGame()
@@ -223,20 +195,12 @@ public class GameManager : MonoBehaviour
         Application.Quit();
 #endif
     }
-
     public static void ResetLevelData()
     {
-
         Player.itemsCollected.Clear();
-
         PlayerData.playerFruitPoints = 0;
-
         Checkpoint.isCheckpointActivated = false;
-
         Checkpoint.timesCheckpointUsed = 0;
-
         Checkpoint.isLastRespawnAllowed = false;
-
     }
-
 }

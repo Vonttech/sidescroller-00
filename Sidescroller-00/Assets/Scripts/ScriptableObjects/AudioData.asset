@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7218c96d8f44cb442a8fc25835fdb7ca, type: 3}
-  m_Name: AudioData_lvl_1 1
+  m_Name: AudioData
   m_EditorClassIdentifier: 
-  sceneBackgroundMusic: {fileID: 8300000, guid: fc5af015011ea3745b7f78ea1dd1049f, type: 3}
+  buttonClickSound: {fileID: 8300000, guid: 81652031b64c342cc8dbc59c138d77c5, type: 3}
+  pauseMenuSound: {fileID: 8300000, guid: d8d04c6f80a1140db85ede568dab1f51, type: 3}

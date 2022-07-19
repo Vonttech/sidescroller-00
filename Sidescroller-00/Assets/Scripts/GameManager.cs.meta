@@ -3,7 +3,19 @@ guid: 5f5d5a2555eca2f47b8561e25df03e4b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - audioManager: {instanceID: 0}
+  - audioManagerData: {fileID: 11400000, guid: 594f4e1ca0f7b7a42be93ddf07399bb3, type: 2}
+  - playerGameObject: {instanceID: 0}
+  - playerScript: {instanceID: 0}
+  - pointsTextField: {instanceID: 0}
+  - loseLifePointImage: {instanceID: 0}
+  - gameOverPanel: {instanceID: 0}
+  - pauseMenuPanel: {instanceID: 0}
+  - trophy: {instanceID: 0}
+  - sceneHandler: {instanceID: 0}
+  - introPanelManager: {instanceID: 0}
+  - spawnPointsHandler: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

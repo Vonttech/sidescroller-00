@@ -5,14 +5,18 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private AudioSource audioSource;
-    [SerializeField]
-    private SceneAudioManagerData sceneAudioManagerData;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = sceneAudioManagerData.sceneBackgroundMusic;
-        audioSource.PlayDelayed(1f);
+    }
+    /// <summary>
+    /// Play one shot of the audioclip
+    /// </summary>
+    /// <param name="audioClip">audio clip to be played</param>
+    public void ShotSound(AudioClip audioClip)
+    {
+        audioSource.PlayOneShot(audioClip);
     }
 }
