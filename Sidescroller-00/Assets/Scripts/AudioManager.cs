@@ -11,12 +11,19 @@ public class AudioManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
     }
+    IEnumerator DelayVolumeReturn()
+    {
+        yield return new WaitForSeconds(0.5f);
+        audioSource.UnPause();
+    }
     /// <summary>
     /// Play one shot of the audioclip
     /// </summary>
     /// <param name="audioClip">audio clip to be played</param>
     public void ShotSound(AudioClip audioClip)
     {
+        //audioSource.Pause();
         audioSource.PlayOneShot(audioClip);
+        //StartCoroutine(DelayVolumeReturn());
     }
 }

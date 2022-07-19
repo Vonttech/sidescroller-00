@@ -164,6 +164,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void CallExitGame()
     {
+        audioManager.ShotSound(audioManagerData.buttonClickSound);
         SceneLoadHandler.ExitGame();
     }
     public void ResumeGame()
@@ -173,6 +174,7 @@ public class GameManager : MonoBehaviour
     }
     public void CallResetLevelData()
     {
+        audioManager.ShotSound(audioManagerData.buttonClickSound);
         SceneLoadHandler.ResetLevelData();
     }
     public void ChangePauseGameState()

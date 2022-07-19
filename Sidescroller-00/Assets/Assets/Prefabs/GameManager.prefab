@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioManager: {fileID: 0}
-  audioManagerData: {fileID: 0}
+  audioManagerData: {fileID: 11400000, guid: 594f4e1ca0f7b7a42be93ddf07399bb3, type: 2}
   playerGameObject: {fileID: 0}
   playerScript: {fileID: 0}
   pointsTextField: {fileID: 0}
@@ -56,6 +56,5 @@ MonoBehaviour:
   gameOverPanel: {fileID: 0}
   pauseMenuPanel: {fileID: 0}
   trophy: {fileID: 0}
-  sceneHandler: {fileID: 882922287854168084, guid: eaeeb4bdf18ba8d41a0bfe74bfefe48f, type: 3}
   introPanelManager: {fileID: 0}
   spawnPointsHandler: {fileID: 0}
