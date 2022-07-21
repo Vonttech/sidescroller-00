@@ -5,7 +5,8 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private AudioSource audioSource;
-
+    [SerializeField]
+    private AudioManagerData audioData;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,9 +22,16 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     /// <param name="audioClip">audio clip to be played</param>
     public void ShotSound(AudioClip audioClip)
-    {
+    { 
         //audioSource.Pause();
         audioSource.PlayOneShot(audioClip);
         //StartCoroutine(DelayVolumeReturn());
+    }
+    /// <summary>
+    /// Plays button click sound
+    /// </summary>
+    public void PlayButtonClickSound()
+    {
+        audioSource.PlayOneShot(audioData.buttonClickSound);
     }
 }
