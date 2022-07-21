@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private AudioManager audioManager;
     [SerializeField]
-    private SceneAudioManagerData audioManagerData;
+    private AudioManagerData audioManagerData;
     [SerializeField]
     private GameObject playerGameObject;
     [SerializeField]
@@ -164,15 +164,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void CallExitGame()
     {
-        audioManager.ShotSound(audioManagerData.buttonClickSound);
+        audioManager.PlayButtonClickSound();
         SceneLoadHandler.ExitGame();
     }
     public void ResumeGame()
     {
-        audioManager.ShotSound(audioManagerData.buttonClickSound);
+        audioManager.PlayButtonClickSound();
         StartCoroutine("DelayResumeGame");
     }
-    public void CallResetLevelData()
+    public void CallResetLevel()
     {
         audioManager.ShotSound(audioManagerData.buttonClickSound);
         SceneLoadHandler.ResetLevelData();
