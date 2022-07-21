@@ -218,6 +218,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1393771970}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &57283340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +549,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1393771970}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &593233261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,6 +753,10 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6763188462757275677, guid: e6599b97bff7f244cadc899af3e34df9, type: 3}
+      propertyPath: audioData
+      value: 
+      objectReference: {fileID: 11400000, guid: 594f4e1ca0f7b7a42be93ddf07399bb3, type: 2}
     - target: {fileID: 6763188462757275677, guid: e6599b97bff7f244cadc899af3e34df9, type: 3}
       propertyPath: sceneAudioManagerData
       value: 
@@ -1038,6 +1066,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215375814}
   m_CullTransparentMesh: 1
+--- !u!114 &1393771970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6763188462757275677, guid: e6599b97bff7f244cadc899af3e34df9, type: 3}
+  m_PrefabInstance: {fileID: 798024459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8ad834a5ab77a478b7505e7c4e543f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1636292476 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 882922287854168086, guid: eaeeb4bdf18ba8d41a0bfe74bfefe48f, type: 3}
