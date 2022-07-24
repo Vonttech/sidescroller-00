@@ -13,15 +13,9 @@ public class SceneHandler
         get { return initialLevelSceneID; } 
         private set {}
     }
-
-    [SerializeField]
-    private Image fadeImage; // Pode ser inserido em um scriptable object
-
     private bool shouldStopFade = false;
 
-    private Animator animator; // Passará a ser do gameObject
-
-    public static void NextLevel()
+    public void NextLevel()
     {
         int nextSceneToLoadIndex = currentSceneID + 1;
         try
@@ -33,7 +27,7 @@ public class SceneHandler
             SceneManager.LoadScene("MainMenu");
         }
     }
-    public static void ResetLevelData()
+    public void ResetLevelData()
     {
         Player.itemsCollected.Clear();
         PlayerData.playerFruitPoints = 0;
@@ -66,14 +60,13 @@ public class SceneHandler
     {
         if (SceneManager.GetActiveScene().isLoaded && !shouldStopFade)
         {
-            animator.SetTrigger("fadeIn");
             shouldStopFade = true;
         }
     }
 
     public void StartGame()
     {
-        animator.SetTrigger("fadeOut");
+        LoadScene(initialLevelSceneID);
     }
     public void LoadScene(string sceneName)
     {

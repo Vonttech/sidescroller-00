@@ -170,6 +170,16 @@ public class GameManager : MonoBehaviour
         Debug.Log("Começar coroutina");
         //StartCoroutine(customSM.);
     }
+    public void CallStartGame()
+    {
+        sceneHandler.StartGame();
+    }
+
+    public void fadeStartButton()
+    {
+        GetComponent<Animator>().SetTrigger("fadeIn");
+    }
+
     public void ResumeGame()
     {
         audioManager.PlayButtonClickSound();
@@ -180,6 +190,7 @@ public class GameManager : MonoBehaviour
         audioManager.ShotSound(audioManagerData.buttonClickSound);
         //SceneLoadHandler.ResetLevelData();
     }
+
     public void ChangePauseGameState()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
