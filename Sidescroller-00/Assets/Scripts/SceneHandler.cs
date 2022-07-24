@@ -48,7 +48,6 @@ public class SceneHandler
 
     private void ShutDownApp()
     {
-        Debug.Log("Shutdown Game");
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else

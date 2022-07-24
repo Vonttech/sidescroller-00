@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private bool isGamePaused = false;
     private bool isGameOver = false;
     private int playerLifePointsCount;
+    private Animator animator;
     private SceneHandler sceneHandler = new SceneHandler();
 
     [SerializeField]
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
         Trophy.isPlayerBeatLevel = false;
         PlayerData.playerInitialLifePoints = playerScript.LifePoints;
         spawnPointsHandler.CheckCheckpointUseLimit();
+        animator = GetComponent<Animator>();
         CountTotalFruitsInLevel();
         SpawnPlayerFromStartPoint();
     }
@@ -166,18 +168,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void CallExitGame()
     {
-        //audioManager.PlayButtonClickSound();
-        Debug.Log("Começar coroutina");
-        //StartCoroutine(customSM.);
+        audioManager.PlayButtonClickSound();
+        StartCoroutine(sceneHandler.CloseApp());
     }
     public void CallStartGame()
     {
         sceneHandler.StartGame();
     }
 
-    public void fadeStartButton()
+    public void NextLevelTransition()
     {
-        GetComponent<Animator>().SetTrigger("fadeIn");
+       animator.SetTrigger("fadeIn");
     }
 
     public void ResumeGame()
