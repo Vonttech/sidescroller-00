@@ -21,9 +21,9 @@ public class ScoreManager : MonoBehaviour
         itemsCollected.text = $"{PlayerData.playerFruitPoints}/{LevelData.totalFruitsInLevel}";
     }
 
-    public void NextLevel()
-    {
-        SceneLoadHandler.NextLevel();
-        SceneLoadHandler.ResetLevelData();
-    }
+    //public void NextLevel()
+    //{
+    //    SceneLoadHandler.NextLevel();
+    //    SceneLoadHandler.ResetLevelData();
+    //}
 }

@@ -3,45 +3,23 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-public class SceneLoadHandler : MonoBehaviour
+public class SceneHandler
 {
-    public static SceneLoadHandler Instance { get; private set; }
-
     public static int currentSceneID;
-
-    private int initialLevelScene = 3;
-    public int InitialLevelScene 
+    private float secondsToDelay = 1.3f;
+    private int initialLevelSceneID = 3; //Pode ser inserido em um scriptableObject
+    public int InitialLevelSceneID 
     { 
-        get { return initialLevelScene; } 
+        get { return initialLevelSceneID; } 
         private set {}
     }
 
     [SerializeField]
-    private Image fadeImage;
+    private Image fadeImage; // Pode ser inserido em um scriptable object
 
     private bool shouldStopFade = false;
 
-    private Animator animator;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-            animator = GetComponent<Animator>();
-            currentSceneID = SceneManager.GetActiveScene().buildIndex;
-            DontDestroyOnLoad(this);
-        }
-
-    }
-    private void LateUpdate()
-    {
-        CheckIfSceneLoaded();
-    }
+    private Animator animator; // Passará a ser do gameObject
 
     public static void NextLevel()
     {
@@ -63,8 +41,20 @@ public class SceneLoadHandler : MonoBehaviour
         Checkpoint.timesCheckpointUsed = 0;
         Checkpoint.isLastRespawnAllowed = false;
     }
-    public static void ExitGame()
+
+    /// <summary>
+    /// Closes the application after 1.3 seconds.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CloseApp()
     {
+        yield return new WaitForSecondsRealtime(secondsToDelay);
+        ShutDownApp();
+    }
+
+    private void ShutDownApp()
+    {
+        Debug.Log("Shutdown Game");
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
@@ -85,13 +75,16 @@ public class SceneLoadHandler : MonoBehaviour
     {
         animator.SetTrigger("fadeOut");
     }
-    public void LoadScene()
+    public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(InitialLevelScene);
+        SceneManager.LoadScene(sceneName);
+    }
+    public void LoadScene(int sceneID)
+    {
+        SceneManager.LoadScene(sceneID);
     }
 
 
-    
 
 
 

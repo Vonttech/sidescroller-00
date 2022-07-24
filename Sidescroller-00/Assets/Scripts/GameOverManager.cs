@@ -24,13 +24,13 @@ public class GameOverManager : MonoBehaviour
         
     }
 
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneLoadHandler.currentSceneID);
+    //public void RestartGame()
+    //{
+    //    SceneManager.LoadScene(SceneLoadHandler.currentSceneID);
 
-        SceneLoadHandler.ResetLevelData();
+    //    SceneLoadHandler.ResetLevelData();
 
-    }
+    //}
 
     public void ExitGame()
     {

@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
 
     private bool isGamePaused = false;
     private bool isGameOver = false;
-    private SceneLoadHandler sceneHandler;
     private int playerLifePointsCount;
+    private SceneHandler sceneHandler = new SceneHandler();
 
+    [SerializeField]
+    private SceneHandlerData sceneHandlerData;
     [SerializeField]
     private AudioManager audioManager;
     [SerializeField]
@@ -39,7 +41,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         PlayerController.isAllowedToMove = false;
-        SceneLoadHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
+        SceneHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
         spawnPointsHandler.SetLevelSpawnPointsPosition();
     }
     private void Start()
@@ -164,8 +166,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void CallExitGame()
     {
-        audioManager.PlayButtonClickSound();
-        SceneLoadHandler.ExitGame();
+        //audioManager.PlayButtonClickSound();
+        Debug.Log("Começar coroutina");
+        //StartCoroutine(customSM.);
     }
     public void ResumeGame()
     {
@@ -175,7 +178,7 @@ public class GameManager : MonoBehaviour
     public void CallResetLevel()
     {
         audioManager.ShotSound(audioManagerData.buttonClickSound);
-        SceneLoadHandler.ResetLevelData();
+        //SceneLoadHandler.ResetLevelData();
     }
     public void ChangePauseGameState()
     {
