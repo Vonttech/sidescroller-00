@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static bool isAllowedToMove;
+
     private Player player = new Player();
     
     private Collider2D m_collider;
@@ -31,7 +33,14 @@ public class PlayerController : MonoBehaviour
     private AudioClip deathSound;
     [SerializeField]
     private AudioClip spawnSound;
-    public static bool isAllowedToMove;
+    private Vector3 playerRespawPos;
+    public Vector3 PlayerRespawPos
+    {
+        get { return playerRespawPos; }
+        set { playerRespawPos = value; }
+    }
+    private bool shouldStopCheckPlayerStatus = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +51,8 @@ public class PlayerController : MonoBehaviour
         audioSource.PlayOneShot(spawnSound);
         m_collider = GetComponent<Collider2D>();
         m_collider.enabled = true;
+        PlayerData.playerLifePoints = player.LifePoints;
+
     }
     // Update is called once per frame
     void Update()
@@ -53,6 +64,7 @@ public class PlayerController : MonoBehaviour
             CheckJumpState();
             GetAnimatorBoolValues();
         }
+
     }
     private void GetAnimatorBoolValues()
     {
@@ -96,7 +108,7 @@ public class PlayerController : MonoBehaviour
             !isHitTaken)
         {
             isPlayerOnGround = false;
-            playerAudioSource.Play();
+            audioSource.Play();
             animator.SetBool("isPlayerOnGround", isPlayerOnGround);
             rigidBody.AddForce(transform.up * thurst, ForceMode2D.Impulse);
             jumpCount++;
@@ -108,7 +120,7 @@ public class PlayerController : MonoBehaviour
             jumpCount < jumpsLimit)
         {
             rigidBody.AddForce(transform.up * thurst, ForceMode2D.Impulse);
-            playerAudioSource.PlayOneShot(doubleJumpAudio);
+            audioSource.PlayOneShot(doubleJumpAudio);
             isDoubleJumping = true;
             animator.SetBool("isDoubleJumping", isDoubleJumping);
             jumpCount = 0;
@@ -147,7 +159,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isPlayerOnGround", false);
             animator.SetTrigger("hit");
             isHitTaken = true;
-            playerAudioSource.PlayOneShot(hitAudio);
+            audioSource.PlayOneShot(hitAudio);
             rigidBody.AddForce((transform.up + (-transform.right)) * hitThurst, ForceMode2D.Impulse);
             GetComponent<Player>().LifePoints--;
             animator.SetBool("isJumping", false);
@@ -194,10 +206,10 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("DeadZone"))
         {
-            isAlive = false;
-            lifePoints = 0;
+            player.IsAlive = false;
+            player.LifePoints = 0;
             animator.SetTrigger("death");
-            playerRigidBody.AddForce(transform.up * 45f, ForceMode2D.Impulse);
+            rigidBody.AddForce(transform.up * 45f, ForceMode2D.Impulse);
             StartCoroutine(DisablePlayer());
         }
     }
@@ -209,11 +221,11 @@ public class PlayerController : MonoBehaviour
     }
     private void CheckPlayerStatus()
     {
-        if (lifePoints <= 0 && !shouldStopCheckPlayerStatus)
+        if (player.LifePoints <= 0 && !shouldStopCheckPlayerStatus)
         {
             shouldStopCheckPlayerStatus = true;
             m_collider.enabled = false;
-            isAlive = false;
+            player.IsAlive = false;
             audioSource.PlayOneShot(deathSound);
             animator.SetTrigger("death");
             StartCoroutine(DisablePlayer());
@@ -227,7 +239,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Checkpoint.isCheckpointActivated && !Checkpoint.isLastRespawnAllowed)
         {
-            lifePoints = PlayerData.playerLifePointsSaved;
+            player.LifePoints = PlayerData.playerLifePointsSaved;
 
             transform.position = LevelData.checkpointPosition;
         }

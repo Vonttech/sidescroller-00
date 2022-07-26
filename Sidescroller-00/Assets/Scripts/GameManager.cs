@@ -20,8 +20,7 @@ public class GameManager : MonoBehaviour
     private AudioManagerData audioManagerData;
     [SerializeField]
     private GameObject playerGameObject;
-    [SerializeField]
-    private Player playerScript;
+    private PlayerController playerController;
     [SerializeField]
     private Text pointsTextField;
     [SerializeField]
@@ -43,13 +42,14 @@ public class GameManager : MonoBehaviour
     {
         PlayerController.isAllowedToMove = false;
         SceneHandler.currentSceneID = SceneManager.GetActiveScene().buildIndex;
-        spawnPointsHandler.SetLevelSpawnPointsPosition();
+        //spawnPointsHandler.SetLevelSpawnPointsPosition();
     }
     private void Start()
     {
-        playerLifePointsCount = playerScript.LifePoints;
+        playerController = playerGameObject.GetComponent<PlayerController>();
+        playerLifePointsCount = playerController.LifePoints; //get player lifepoints
         Trophy.isPlayerBeatLevel = false;
-        PlayerData.playerInitialLifePoints = playerScript.LifePoints;
+        PlayerData.playerInitialLifePoints = playerController.LifePoints;
         spawnPointsHandler.CheckCheckpointUseLimit();
         animator = GetComponent<Animator>();
         CountTotalFruitsInLevel();
@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
     }
     private void RestartFromCheckpoint()
     {
-        if (!playerScript.IsAlive &&
+        if (!playerController.IsAlive &&
             Checkpoint.isCheckpointActivated)
         {
             StartCoroutine("CountToRespawn");
@@ -110,14 +110,14 @@ public class GameManager : MonoBehaviour
     }
     private void CheckPlayerLifePoints()
     {
-        if(playerLifePointsCount > playerScript.LifePoints)
+        if(playerLifePointsCount > playerController.LifePoints)
         {
             //create method to change life points in life bar
             int lastLifePointIndex = playerLifePointsCount - 1;
             lifePointsImageGameObject[lastLifePointIndex].texture = loseLifePointImage.texture;
             playerLifePointsCount--;
         }
-        else if(playerScript.LifePoints == 0)
+        else if(playerController.LifePoints == 0)
         {
             StartCoroutine("DelayGameOver");
         }

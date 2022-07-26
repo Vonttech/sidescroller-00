@@ -12,24 +12,11 @@ public class Player
 
         set { isAlive = value; }
     }
-    private Vector3 playerRespawPos;
-    public Vector3 PlayerRespawPos
-    {
-        get { return playerRespawPos; }
-        set { playerRespawPos = value; }
-    }
     private int lifePoints = 3;
     public int LifePoints
     {
         get { return lifePoints; }
         set { LifePointsSetTreatment(value); }
-    }
-    private bool shouldStopCheckPlayerStatus = false;
-
-    // Update is called once per frame
-    void Update()
-    {
-        PlayerData.playerLifePoints = lifePoints;
     }
 
     private void LifePointsSetTreatment(int value)
