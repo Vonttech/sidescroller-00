@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player
 {
     public static Dictionary<string, GameObject> itemsCollected = new Dictionary<string, GameObject>();
-
     private bool isAlive = true;
     public bool IsAlive
     {
@@ -25,7 +24,6 @@ public class Player : MonoBehaviour
         get { return lifePoints; }
         set { LifePointsSetTreatment(value); }
     }
-    
     private Rigidbody2D playerRigidBody;
     private Animator animator;
     private AudioSource audioSource;

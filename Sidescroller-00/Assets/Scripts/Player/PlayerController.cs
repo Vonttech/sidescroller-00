@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private Player player = new Player();
     private Rigidbody2D rigidBody;
     private Animator animator;
     private AudioSource playerAudioSource;
